@@ -31,8 +31,9 @@ public class MyLabel extends JLabel implements KeyListener{
 	Timer show_timer = new Timer();
 	Timer remove_timer = new Timer();
 	public int block_size = 20;
+	boolean hold = false;
 	
-	public MyLabel(int col, long begin, long end, Container c) {
+	public MyLabel(int col, long begin, long end, Container c, long time_elapsed) {
 		
 		ImageIcon icon = new ImageIcon("src/endproject/block.png");
 		setIcon(icon);
@@ -56,15 +57,15 @@ public class MyLabel extends JLabel implements KeyListener{
 		show = new Show(this, c); // show the label in JFrame
 		remove = new Remove(this, c);
 		
-		
+		begin = begin - time_elapsed;
 		if(begin < 1000) { //1000ms為block 從上面掉下來所需的時間
 			begin = 1000;
 			//setLocation(100 + col * 150, 75 - block_size);
 		}
-		
+		//System.out.println(time_elapsed);
 		show_timer.schedule(show, begin-1000);     //show the label when (begin-2500)
-		move_timer.schedule(move, begin-1000, 40); //(575-75/20)*40 = (底-初始位置) / (每0.04秒往下20)
-		remove_timer.schedule(remove, 0, 50);      //每0.05秒判斷一次是否要刪掉label
+		move_timer.scheduleAtFixedRate(move, begin-1000, 2); //(575-75)*2 = (底-初始位置) / (每2ms往下1)
+		remove_timer.scheduleAtFixedRate(remove, begin-1000, 2);      //每2ms判斷一次是否要刪掉label
 		
 		
 		c.addKeyListener(this); //add KeyListener to JFrame
@@ -81,7 +82,8 @@ public class MyLabel extends JLabel implements KeyListener{
 	public void keyPressed(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		
-		if (e > 0) { // is long press
+		if (e > 0 && getY()+block_size > 555 && getY()+block_size < 595 ) { // is long press
+			hold = true;
 			switch (arg0.getKeyChar()) {
 			case 'd':
 				remove.Ddown = true;
@@ -96,11 +98,13 @@ public class MyLabel extends JLabel implements KeyListener{
 				remove.Kdown = true;
 				break;
 			}
-		} else if (getY() > 545 && getY() < 625 ) { // is single press
-		
-			switch(column) {
-			case 0:
-				if(arg0.getKeyChar() == 'd') {
+		} else if (e == 0 && getY() > 545 && getY() < 625 ) { // is single press
+			// e == 0 will help avoid long press step into this if-condition
+			char key = arg0.getKeyChar();
+				if(column == 0 && key == 'd' || 
+				   column == 1 && key == 'f' ||
+				   column == 2 && key == 'j' ||
+				   column == 3 && key == 'k' ) {
 					if(getY() < 555 || getY() >= 615) { //bad
 						Main.assess.setText("Bad");
 						Main.assess.setForeground(Color.red);
@@ -114,75 +118,11 @@ public class MyLabel extends JLabel implements KeyListener{
 						Main.assess.setForeground(Color.GREEN);
 						Main.grade += 200;
 					}
-					Container parent = getParent();
 					parent.remove(this);
 					parent.repaint();
 					parent.removeKeyListener(this);
-				}
-				break;
-			case 1:
-				if(arg0.getKeyChar() == 'f' ) {
-					if(getY() < 555 || getY() >= 615) { //bad
-						Main.assess.setText("Bad");
-						Main.assess.setForeground(Color.red);
-						Main.grade += 50;
-					} else if(getY() < 575 || getY() >= 595) { //good
-						Main.assess.setText("Good");
-						Main.grade += 100;
-						Main.assess.setForeground(Color.yellow);
-					} else if(getY() >= 575 && getY() < 595) { //perfect
-						Main.assess.setText("Perfect");
-						Main.assess.setForeground(Color.GREEN);
-						Main.grade += 200;
-					}
-					Container parent = getParent();
-					parent.remove(this);
-					parent.repaint();
-					parent.removeKeyListener(this);
-				}
-				break;
-			case 2:
-				if(arg0.getKeyChar() == 'j') {
-					if(getY() < 555 || getY() >= 615) { //bad
-						Main.assess.setText("Bad");
-						Main.assess.setForeground(Color.red);
-						Main.grade += 50;
-					} else if(getY() < 575 || getY() >= 595) { //good
-						Main.assess.setText("Good");
-						Main.grade += 100;
-						Main.assess.setForeground(Color.yellow);
-					} else if(getY() >= 575 && getY() < 595) { //perfect
-						Main.assess.setText("Perfect");
-						Main.assess.setForeground(Color.GREEN);
-						Main.grade += 200;
-					}
-					Container parent = getParent();
-					parent.remove(this);
-					parent.repaint();
-					parent.removeKeyListener(this);
-				}
-				break;
-			case 3:
-				if(arg0.getKeyChar() == 'k') {
-					if(getY() < 555 || getY() >= 615) { //bad
-						Main.assess.setText("Bad");
-						Main.assess.setForeground(Color.red);
-						Main.grade += 50;
-					} else if(getY() < 575 || getY() >= 595) { //good
-						Main.assess.setText("Good");
-						Main.grade += 100;
-						Main.assess.setForeground(Color.yellow);
-					} else if(getY() >= 575 && getY() < 595) { //perfect
-						Main.assess.setText("Perfect");
-						Main.assess.setForeground(Color.GREEN);
-						Main.grade += 200;
-					}
-					Container parent = getParent();
-					parent.remove(this);
-					parent.repaint();
-					parent.removeKeyListener(this);
-				}
-				break;
+					remove_timer.cancel();
+					remove_timer.purge();
 			}
 			
 		}

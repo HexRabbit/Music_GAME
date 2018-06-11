@@ -140,7 +140,7 @@ public class Selection extends JFrame implements KeyListener {
 			songFile1 = new File("src/4K-beatmaps/" + list1[m] + "/audio.wav");
 			mp3 = AudioPlayer.createPlayer(songFile1);
 			mp3.play();
-			button.get(m).setFocusable(true);
+			
 
 			break;
 		case KeyEvent.VK_UP:
@@ -154,9 +154,11 @@ public class Selection extends JFrame implements KeyListener {
 			songFile2 = new File("src/4K-beatmaps/" + list1[m] + "/audio.wav");
 			mp3 = AudioPlayer.createPlayer(songFile2);
 			mp3.play();
-			//button.get(m).setFocusable(true);
+			
 			break;
-
+			
+		case KeyEvent.VK_ENTER:
+			button.get(m).doClick();
 		}
 
 		for (int i = 0; i < 5; ++i) {

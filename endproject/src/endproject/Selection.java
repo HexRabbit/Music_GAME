@@ -154,7 +154,7 @@ public class Selection extends JFrame implements KeyListener {
 			songFile2 = new File("src/4K-beatmaps/" + list1[m] + "/audio.wav");
 			mp3 = AudioPlayer.createPlayer(songFile2);
 			mp3.play();
-			button.get(m).setFocusable(true);
+			//button.get(m).setFocusable(true);
 			break;
 
 		}
@@ -181,18 +181,23 @@ public class Selection extends JFrame implements KeyListener {
 		BG.setSize(192*2,108*2);
 		BG.setLocation(0,100);
 		this.repaint();
-		if(m>=3)
-		{
-		for (int i = 0; i < 5; ++i) {
+		
+		if (m == button.size() - 1) {
+			for (int i = 0; i < 3; ++i) {
+				panel[i].add(button.get(m - 2 + i));
+				add(panel[i]);
+				panel[i].revalidate();
+				panel[i].repaint();
+			}
+		} else if (m == button.size() - 2) {
+			for (int i = 0; i < 4; ++i) {
+				panel[i].add(button.get(m - 2 + i));
+				add(panel[i]);
+				panel[i].revalidate();
+				panel[i].repaint();
+			}
+		} else if (m == 2) {
 
-			panel[i].add(button.get(m - 2 + i));
-			add(panel[i]);
-			panel[i].revalidate();
-			panel[i].repaint();
-		}
-		}else if(m == 2)
-		{
-			
 			for (int i = 0; i < 5; ++i) {
 
 				panel[i].add(button.get(i));
@@ -200,21 +205,27 @@ public class Selection extends JFrame implements KeyListener {
 				panel[i].revalidate();
 				panel[i].repaint();
 			}
-			
-		}else if(m == 1)
-		{
+
+		} else if (m == 1) {
 			for (int i = 1; i < 5; ++i) {
 
-				panel[i].add(button.get(i-1));
+				panel[i].add(button.get(i - 1));
 				add(panel[i]);
 				panel[i].revalidate();
 				panel[i].repaint();
 			}
-		}else if(m==0)
-		{
+		} else if (m == 0) {
 			for (int i = 2; i < 5; ++i) {
 
-				panel[i].add(button.get(i-2));
+				panel[i].add(button.get(i - 2));
+				add(panel[i]);
+				panel[i].revalidate();
+				panel[i].repaint();
+			}
+		} else {
+			for (int i = 0; i < 5; ++i) {
+
+				panel[i].add(button.get(m - 2 + i));
 				add(panel[i]);
 				panel[i].revalidate();
 				panel[i].repaint();

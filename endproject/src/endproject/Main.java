@@ -153,27 +153,6 @@ public class Main extends JFrame {
 			System.out.println("auto:" + mp3.isAutoClose());
 		}*/
 
-		int high = 0;
-		
-		//l.add(new MyLabel(1, 2500, 0, this));
-		long start = System.currentTimeMillis();
-		
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < sng.track.get(i).size(); j++) {
-				long end = System.currentTimeMillis();
-				l.add(new MyLabel(i, sng.track.get(i).get(j).start, sng.track.get(i).get(j).end, this, end - start));
-				
-				if(sng.track.get(i).get(j).end == 0) {
-					high+=200;
-				} else {
-					high += (sng.track.get(i).get(j).end - sng.track.get(i).get(j).start)/40*200; 
-				}
-			}
-		}
-
-		highest.setText(Integer.toString(high));
-		
-		
 		File feed = new File("src/endproject/rec.png");
 
 		Image image1 = null;
@@ -191,6 +170,28 @@ public class Main extends JFrame {
 			feedback[i].setVisible(false);
 			add(feedback[i]);
 		}
+		
+		int high = 0;
+		
+		
+		long start = System.currentTimeMillis();
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < sng.track.get(i).size(); j++) {
+				long end = System.currentTimeMillis();
+				l.add(new MyLabel(i, sng.track.get(i).get(j).start, sng.track.get(i).get(j).end, this, end - start));
+				
+				if(sng.track.get(i).get(j).end == 0) {
+					high+=200;
+				} else {
+					high += (sng.track.get(i).get(j).end - sng.track.get(i).get(j).start)/40*200; 
+				}
+			}
+		}
+
+		highest.setText(Integer.toString(high));
+		
+		
+		
 		
 		
 		

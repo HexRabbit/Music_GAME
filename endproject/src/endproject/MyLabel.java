@@ -95,7 +95,7 @@ public class MyLabel extends JLabel implements KeyListener{
 			Main.feedback[3].setVisible(true);
 			break;
 		} 
-		if (e > 0 && getY()+block_size > 555 && getY()+block_size < 595 ) { // is long press
+		if (e > 0 && getY()+block_size > 555 && getY()+block_size < 615 ) { // is long press
 			hold = true;
 			switch (arg0.getKeyChar()) {
 			case 'd':

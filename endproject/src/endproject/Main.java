@@ -138,9 +138,11 @@ public class Main extends JFrame {
 		int high = 0;
 		
 		//l.add(new MyLabel(1, 2500, 0, this));
+		long start = System.currentTimeMillis();
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < sng.track.get(i).size(); j++) {
-				l.add(new MyLabel(i, sng.track.get(i).get(j).start, sng.track.get(i).get(j).end, this));
+				long end = System.currentTimeMillis();
+				l.add(new MyLabel(i, sng.track.get(i).get(j).start, sng.track.get(i).get(j).end, this, end - start));
 				if(sng.track.get(i).get(j).end == 0) {
 					high+=200;
 				} else {

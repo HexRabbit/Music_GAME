@@ -15,15 +15,10 @@ public class Move extends TimerTask{
 	}
 	
 	public void run() {
-		label.setLocation(label.getX(), label.getY()+20);
-		
-		if(label.getY() > 670 && label.isValid()) {
-			
-				Main.assess.setText("Miss");
-				Main.assess.setForeground(Color.pink);
-				parent.remove(label);
-				parent.repaint();
-				
+		label.setLocation(label.getX(), label.getY()+1);
+		if(label.getY() > 700) {
+			label.move_timer.cancel();
+			label.move_timer.purge();
 		}
 	}
 }

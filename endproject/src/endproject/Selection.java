@@ -90,6 +90,9 @@ public class Selection extends JFrame implements KeyListener {
 		}
 
 		m = list1.length / 2;
+		File songFile = new File("src/4K-beatmaps/" + list1[m] + "/audio.wav");
+		mp3 = AudioPlayer.createPlayer(songFile);
+		mp3.play();
 
 		//System.out.println(m);
 

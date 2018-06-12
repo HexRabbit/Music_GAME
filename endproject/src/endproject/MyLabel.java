@@ -81,7 +81,20 @@ public class MyLabel extends JLabel implements KeyListener{
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		switch (arg0.getKeyChar()) {
+		case 'd':
+			Main.feedback[0].setVisible(true);
+			break;
+		case 'f':
+			Main.feedback[1].setVisible(true);
+			break;
+		case 'j':
+			Main.feedback[2].setVisible(true);
+			break;
+		case 'k':
+			Main.feedback[3].setVisible(true);
+			break;
+		} 
 		if (e > 0 && getY()+block_size > 555 && getY()+block_size < 595 ) { // is long press
 			hold = true;
 			switch (arg0.getKeyChar()) {
@@ -134,15 +147,19 @@ public class MyLabel extends JLabel implements KeyListener{
 		switch (arg0.getKeyChar()) {
 		case 'd':
 			remove.Ddown = false;
+			Main.feedback[0].setVisible(false);
 			break;
 		case 'f':
 			remove.Fdown = false;
+			Main.feedback[1].setVisible(false);
 			break;
 		case 'j':
 			remove.Jdown = false;
+			Main.feedback[2].setVisible(false);
 			break;
 		case 'k':
 			remove.Kdown = false;
+			Main.feedback[3].setVisible(false);
 			break;
 		}
 

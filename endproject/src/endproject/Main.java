@@ -19,6 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 
 import javafx.embed.swing.JFXPanel;
 
@@ -42,11 +43,17 @@ public class Main extends JFrame {
 	public static int grade;
 
 	public static AudioPlayer mp3;
+	
+	public static JLabel[] feedback = new JLabel[4];
 	public Main(String song) {
 		setSize(900, 700);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(null);
-
+		
+		getContentPane().setBackground(Color.black);
+		
+		
+		
 		final JFXPanel fxPanel = new JFXPanel();
 
 		pause.setActionCommand("pause");
@@ -54,13 +61,18 @@ public class Main extends JFrame {
 		pause.addActionListener(buttonListener);
 		pause.setFocusable(false);
 		pause.setLocation(800, 50);
+		pause.setOpaque(true);
+		pause.setBackground(Color.black);
 		pause.setSize(100, 30);
 		add(pause);
 
+		score.setOpaque(true);
+		score.setForeground(Color.white);
+		score.setBackground(Color.black);
 		score.setLocation(750, 20);
 		score.setSize(150, 30);
 		score.setFont(new Font("New Romance", Font.BOLD, 32));
-
+		
 		add(score);
 		Timer score_timer = new Timer();
 		TimerTask check_score = new TimerTask() {
@@ -79,7 +91,7 @@ public class Main extends JFrame {
 		assess.setSize(120, 40);
 		assess.setFont(new Font("New Romance", Font.BOLD, 32));
 		assess.setOpaque(true);
-		// assess.setBackground(Color.white);
+		assess.setBackground(Color.black);
 		assess.setForeground(Color.GREEN);
 		assess.setAlignmentX(CENTER_ALIGNMENT);
 		assess.setAlignmentY(CENTER_ALIGNMENT);
@@ -96,19 +108,25 @@ public class Main extends JFrame {
 		}
 		
 		JLabel line = new JLabel(new ImageIcon(image));
-		line.setLocation(0, 0);
-		line.setSize(800, 700);
+		line.setLocation(75, 0);
+		line.setSize(600, 700);
 		add(line);
+		//pane.moveToBack(line);
+		//add(line);
 		
 		JLabel wall = new JLabel();
 		wall.setLocation(0, 0);
 		wall.setSize(800, 120);
 		wall.setOpaque(true);
+		wall.setBackground(Color.BLACK);
 		add(wall);
 		
 		JLabel highest = new JLabel();
 		highest.setLocation(750, 150);
 		highest.setSize(150, 30);
+		highest.setOpaque(true);
+		highest.setBackground(Color.BLACK);
+		highest.setForeground(Color.WHITE);
 		highest.setFont(new Font("New Romance", Font.BOLD, 32));
 		add(highest);
 
@@ -139,10 +157,12 @@ public class Main extends JFrame {
 		
 		//l.add(new MyLabel(1, 2500, 0, this));
 		long start = System.currentTimeMillis();
+		
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < sng.track.get(i).size(); j++) {
 				long end = System.currentTimeMillis();
 				l.add(new MyLabel(i, sng.track.get(i).get(j).start, sng.track.get(i).get(j).end, this, end - start));
+				
 				if(sng.track.get(i).get(j).end == 0) {
 					high+=200;
 				} else {
@@ -152,6 +172,28 @@ public class Main extends JFrame {
 		}
 
 		highest.setText(Integer.toString(high));
+		
+		
+		File feed = new File("src/endproject/rec.png");
+
+		Image image1 = null;
+		try {
+			image1 = ImageIO.read(feed);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		for(int i = 0; i < 4; i++) {
+			feedback[i] = new JLabel(new ImageIcon(image1));
+			feedback[i].setLocation(75 + 150*i, 575);
+			feedback[i].setSize(150,35);
+			feedback[i].setVisible(false);
+			add(feedback[i]);
+		}
+		
+		
+		
 		/*
 		 * int i; int j; int b; Random r = new Random(); for(i = 0; i < 20; ++i) { j =
 		 * (int)(Math.random()*4);

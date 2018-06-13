@@ -66,6 +66,16 @@ public class Main extends JFrame {
 		pause.setSize(100, 30);
 		add(pause);
 
+		JButton back = new JButton("back");
+		back.setActionCommand("back");
+		back.addActionListener(buttonListener);
+		back.setFocusable(false);
+		back.setLocation(800, 80);
+		back.setOpaque(true);
+		back.setBackground(Color.black);
+		back.setSize(100, 30);
+		add(back);
+		
 		score.setOpaque(true);
 		score.setForeground(Color.white);
 		score.setBackground(Color.black);
@@ -87,6 +97,9 @@ public class Main extends JFrame {
 
 		score_timer.schedule(check_score, 0, 50);
 
+		/*
+		 * to print out how performance you get
+		 */
 		assess.setLocation(330, 330);
 		assess.setSize(120, 40);
 		assess.setFont(new Font("New Romance", Font.BOLD, 32));
@@ -97,8 +110,10 @@ public class Main extends JFrame {
 		assess.setAlignmentY(CENTER_ALIGNMENT);
 		add(assess);
 
+		/*
+		 * add background
+		 */
 		File infile = new File("src/endproject/line.png");
-
 		Image image = null;
 		try {
 			image = ImageIO.read(infile);
@@ -111,9 +126,10 @@ public class Main extends JFrame {
 		line.setLocation(75, 0);
 		line.setSize(600, 700);
 		add(line);
-		//pane.moveToBack(line);
-		//add(line);
 		
+		/*
+		 * hide block < 75
+		 */
 		JLabel wall = new JLabel();
 		wall.setLocation(0, 0);
 		wall.setSize(800, 120);
@@ -121,6 +137,10 @@ public class Main extends JFrame {
 		wall.setBackground(Color.BLACK);
 		add(wall);
 		
+		/*
+		 * show the highest score should get in this game
+		 * (should hide)
+		 */
 		JLabel highest = new JLabel();
 		highest.setLocation(750, 150);
 		highest.setSize(150, 30);
@@ -130,34 +150,15 @@ public class Main extends JFrame {
 		highest.setFont(new Font("New Romance", Font.BOLD, 32));
 		add(highest);
 
-		begin_time = System.currentTimeMillis();
-		System.out.println(song);
-		Song sng = SongReader.readFile("src/4K-beatmaps/" + song + "/" + song + ".osx");
-
-		File songFile;
-		
-		songFile = new File("src/4K-beatmaps/" + song + "/audio.wav");
-		mp3 = AudioPlayer.createPlayer(songFile);
-		mp3.play();
-
-		/*if (mp3.isPlaying()) {
-			System.out.println("Playing");
-
-			int vol;
-			// mp3.setVolume(50);
-			vol = mp3.getVolume();
-			System.out.println("vol:" + vol);
-			//mp3.setAudioPosition(2000);
-			System.out.println("length:" + mp3.getAudioLength());
-			mp3.setAutoClose(true);
-			System.out.println("auto:" + mp3.isAutoClose());
-		}*/
-
+		/*
+		 * feed back
+		 * 
+		 */
 		File feed = new File("src/endproject/rec.png");
-
 		Image image1 = null;
 		try {
 			image1 = ImageIO.read(feed);
+			System.out.print(image1);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -173,7 +174,15 @@ public class Main extends JFrame {
 		
 		int high = 0;
 		
+		System.out.println(song);
+		Song sng = SongReader.readFile("src/4K-beatmaps/" + song + "/" + song + ".osx");
+
+		File songFile;
+		songFile = new File("src/4K-beatmaps/" + song + "/audio.wav");
+		mp3 = AudioPlayer.createPlayer(songFile);
+		mp3.play();
 		
+		begin_time = System.currentTimeMillis(); //for Pause
 		long start = System.currentTimeMillis();
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < sng.track.get(i).size(); j++) {
@@ -187,7 +196,6 @@ public class Main extends JFrame {
 				}
 			}
 		}
-
 		highest.setText(Integer.toString(high));
 		
 		
@@ -246,4 +254,152 @@ public class Main extends JFrame {
 	 
 	}
 
+	public void restart(String song) {
+		setSize(900, 700);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLayout(null);
+		
+		getContentPane().setBackground(Color.black);
+		
+		
+		
+		final JFXPanel fxPanel = new JFXPanel();
+
+		pause.setActionCommand("pause");
+		MyButtonListener buttonListener = new MyButtonListener();
+		pause.addActionListener(buttonListener);
+		pause.setFocusable(false);
+		pause.setLocation(800, 50);
+		pause.setOpaque(true);
+		pause.setBackground(Color.black);
+		pause.setSize(100, 30);
+		add(pause);
+
+		JButton back = new JButton("back");
+		back.setActionCommand("back");
+		back.addActionListener(buttonListener);
+		back.setFocusable(false);
+		back.setLocation(800, 80);
+		back.setOpaque(true);
+		back.setBackground(Color.black);
+		back.setSize(100, 30);
+		add(back);
+		
+		Timer score_timer = new Timer();
+		TimerTask check_score = new TimerTask() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				score.setText(Integer.toString(grade));
+			}
+
+		};
+
+		score_timer.schedule(check_score, 0, 50);
+
+		
+
+		/*
+		 * add background
+		 */
+		File infile = new File("src/endproject/line.png");
+		Image image = null;
+		try {
+			image = ImageIO.read(infile);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		JLabel line = new JLabel(new ImageIcon(image));
+		line.setLocation(75, 0);
+		line.setSize(600, 700);
+		add(line);
+		
+		/*
+		 * hide block < 75
+		 */
+		JLabel wall = new JLabel();
+		wall.setLocation(0, 0);
+		wall.setSize(800, 120);
+		wall.setOpaque(true);
+		wall.setBackground(Color.BLACK);
+		add(wall);
+		
+		/*
+		 * show the highest score should get in this game
+		 * (should hide)
+		 */
+		JLabel highest = new JLabel();
+		highest.setLocation(750, 150);
+		highest.setSize(150, 30);
+		highest.setOpaque(true);
+		highest.setBackground(Color.BLACK);
+		highest.setForeground(Color.WHITE);
+		highest.setFont(new Font("New Romance", Font.BOLD, 32));
+		add(highest);
+
+		/*
+		 * feed back
+		 * 
+		 */
+		File feed = new File("src/endproject/rec.png");
+		Image image1 = null;
+		try {
+			image1 = ImageIO.read(feed);
+			System.out.print(image1);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		/*for(int i = 0; i < 4; i++) {
+			feedback[i] = new JLabel(new ImageIcon(image1));
+			feedback[i].setLocation(75 + 150*i, 575);
+			feedback[i].setSize(150,35);
+			feedback[i].setVisible(false);
+			add(feedback[i]);
+		}*/
+		
+		int high = 0;
+		
+		System.out.println(song);
+		Song sng = SongReader.readFile("src/4K-beatmaps/" + song + "/" + song + ".osx");
+
+		File songFile;
+		songFile = new File("src/4K-beatmaps/" + song + "/audio.wav");
+		mp3 = AudioPlayer.createPlayer(songFile);
+		mp3.play();
+		
+		while(l.isEmpty() == false) {
+			l.getLast().move_timer.cancel();
+			l.getLast().remove_timer.cancel();
+			l.getLast().show_timer.cancel();
+			l.getLast().move_timer.purge();
+			l.getLast().remove_timer.purge();
+			l.getLast().show_timer.purge();
+			remove(l.getLast());
+			removeKeyListener(l.getLast());
+			l.remove(l.size()-1);
+		}
+		repaint();
+		l.clear();
+		
+		begin_time = System.currentTimeMillis(); //for Pause
+		long start = System.currentTimeMillis();
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < sng.track.get(i).size(); j++) {
+				long end = System.currentTimeMillis();
+				l.add(new MyLabel(i, sng.track.get(i).get(j).start, sng.track.get(i).get(j).end, this, end - start));
+				
+				if(sng.track.get(i).get(j).end == 0) {
+					high+=200;
+				} else {
+					high += (sng.track.get(i).get(j).end - sng.track.get(i).get(j).start)/40*200; 
+				}
+			}
+		}
+		highest.setText(Integer.toString(high));
+	}
 }

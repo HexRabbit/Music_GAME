@@ -8,7 +8,7 @@ import javax.swing.JButton;
 
 
 public class MyButtonListener implements ActionListener{
-
+	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
@@ -27,12 +27,21 @@ public class MyButtonListener implements ActionListener{
 			
 			JButton button = new JButton();
 			button = (JButton) arg0.getSource();
-			
-			Main frame1 = new Main(button.getText());
-			frame1.setVisible(true);
+			if(Selection.frame1 == null)
+				Selection.frame1 = new Main(button.getText());
+			else
+				Selection.frame1.restart(button.getText());
+			Selection.frame1.setVisible(true);
 			Selection.frame.setVisible(false);
 			
 			Selection.mp3.close();
+		} else if(arg0.getActionCommand() == "back") {
+			Main.mp3.close();
+			Selection.frame.setVisible(true);
+			//Selection.mp3.play();
+			Selection.frame1.dispose();
+			//Selection.frame1 = null;
+			
 		}
 	}
 

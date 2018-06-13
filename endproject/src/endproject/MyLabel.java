@@ -22,7 +22,7 @@ public class MyLabel extends JLabel implements KeyListener{
 	public long b, e; //begin, end
 	
 	
-	public MyLabel nextL;
+	
 	public Container parent;
 	public Remove remove;
 	public Show show;
@@ -40,15 +40,9 @@ public class MyLabel extends JLabel implements KeyListener{
 		
 		
 		if (end > 0) {  //if the label is long press
-			//nextL = new MyLabel(col, begin + 200, end, c);
+			
 			block_size = (int)(end - begin)/2;
-			
-			//block_size = 500;
-			//setSize(100, block_size);
-		} /*else {
-			
-			setSize(100, 20);
-		}*/
+		} 
 		
 		setSize(100, block_size);
 		setLocation(100 + col * 150, 95 - block_size);
@@ -60,10 +54,10 @@ public class MyLabel extends JLabel implements KeyListener{
 		begin = begin - time_elapsed;
 		if(begin < 1000) { //1000ms為block 從上面掉下來所需的時間
 			begin = 1000;
-			//setLocation(100 + col * 150, 75 - block_size);
 		}
+		
 		//System.out.println(time_elapsed);
-		show_timer.schedule(show, begin-1000);     //show the label when (begin-2500)
+		show_timer.schedule(show, begin-1000);     //show the label when (begin-1000)
 		move_timer.scheduleAtFixedRate(move, begin-1000, 2); //(575-75)*2 = (底-初始位置) / (每2ms往下1)
 		remove_timer.scheduleAtFixedRate(remove, begin-1000, 2);      //每2ms判斷一次是否要刪掉label
 		
@@ -111,13 +105,13 @@ public class MyLabel extends JLabel implements KeyListener{
 				remove.Kdown = true;
 				break;
 			}
-		} else if (e == 0 && getY() > 545 && getY() < 625 ) { // is single press
+		} else if (e == 0 && getY() > 545 && getY() < 635 ) { // is single press
 			// e == 0 will help avoid long press step into this if-condition
 			char key = arg0.getKeyChar();
-				if(column == 0 && key == 'd' || 
-				   column == 1 && key == 'f' ||
-				   column == 2 && key == 'j' ||
-				   column == 3 && key == 'k' ) {
+				if((column == 0 && key == 'd') || 
+				   (column == 1 && key == 'f') ||
+				   (column == 2 && key == 'j') ||
+				   (column == 3 && key == 'k') ) {
 					if(getY() < 555 || getY() >= 615) { //bad
 						Main.assess.setText("Bad");
 						Main.assess.setForeground(Color.red);

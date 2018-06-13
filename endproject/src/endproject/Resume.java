@@ -18,26 +18,24 @@ public class Resume {
 		
 		for(i = 0; i < Main.l.size(); i++) {
 			now = Main.l.get(i);
-			do {
-				Timer move_timer = new Timer();
-				Timer show_timer = new Timer();
-				Move move = new Move(now, now.parent);
-				Show show = new Show(now, now.parent);
-				if(now.b -1000 > real_run_time) {  //還沒出現
-					now.move_timer = move_timer;
-					now.show_timer = show_timer;
-					now.move_timer.schedule(move, now.b - real_run_time - 1000, 2);
-					now.show_timer.schedule(show, now.b - real_run_time - 1000);
-					
-				} else { //已經出現
-					now.move_timer = move_timer;
-					now.move_timer.schedule(move, 0, 2);
-					
-				}
-				
-				//remove_timer.schedule(remove, 0, 2);
-				now = now.nextL;
-			} while(now != null);
+			
+			Timer move_timer = new Timer();
+			Timer show_timer = new Timer();
+			Move move = new Move(now, now.parent);
+			Show show = new Show(now, now.parent);
+			if (now.b - 1000 > real_run_time) { // 還沒出現
+				now.move_timer = move_timer;
+				now.show_timer = show_timer;
+				now.move_timer.schedule(move, now.b - real_run_time - 1000, 2);
+				now.show_timer.schedule(show, now.b - real_run_time - 1000);
+
+			} else { // 已經出現
+				now.move_timer = move_timer;
+				now.move_timer.schedule(move, 0, 2);
+
+			}
+
+			// remove_timer.schedule(remove, 0, 2);
 			
 		}
 		

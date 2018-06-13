@@ -10,15 +10,11 @@ public class Pause {
 		System.out.println("p: " + (pause_time - Main.begin_time));
 		for(i = 0; i < Main.l.size(); i++) {
 			now = Main.l.get(i);
-			//if (now.b + 2500 < pause_time - Main.begin_time) {
-			//}else {
-				do {
-					now.move_timer.cancel();
-					now.show_timer.cancel();
-					//now.remove_timer.cancel();
-					now = now.nextL;
-				} while (now != null);
-			//}
+			now.move_timer.cancel();
+			now.show_timer.cancel();
+			// now.remove_timer.cancel();
+			
+
 		}
 		
 		Main.mp3.pause();

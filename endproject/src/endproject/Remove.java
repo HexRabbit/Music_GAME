@@ -17,7 +17,7 @@ public class Remove extends TimerTask{
 	}
 	
 	public void run() {
-		if (!label.hold && label.getY()+label.block_size > 625) {
+		if (!label.hold && label.getY()+label.block_size > 700) {
 			Main.assess.setText("Miss");
 			Main.assess.setForeground(Color.pink);
 			parent.remove(label);

@@ -61,7 +61,7 @@ public class Selection extends JFrame implements KeyListener {
 
 	public Selection() {
 
-		setSize(800, 600);
+		setSize(900, 700);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		for (int i = 0; i < 5; ++i) {

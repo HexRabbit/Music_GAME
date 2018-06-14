@@ -40,6 +40,7 @@ public class Main extends JFrame {
 
 	public static JLabel assess = new JLabel(); // record "Perfect", "Good"...
 	public static JLabel score = new JLabel();
+	public JLabel highest = new JLabel();
 	public static int grade;
 
 	public static AudioPlayer mp3;
@@ -141,7 +142,7 @@ public class Main extends JFrame {
 		 * show the highest score should get in this game
 		 * (should hide)
 		 */
-		JLabel highest = new JLabel();
+		
 		highest.setLocation(750, 150);
 		highest.setSize(150, 30);
 		highest.setOpaque(true);
@@ -285,6 +286,7 @@ public class Main extends JFrame {
 		back.setSize(100, 30);
 		add(back);
 		
+		grade = 0;
 		Timer score_timer = new Timer();
 		TimerTask check_score = new TimerTask() {
 
@@ -327,19 +329,7 @@ public class Main extends JFrame {
 		wall.setBackground(Color.BLACK);
 		add(wall);
 		
-		/*
-		 * show the highest score should get in this game
-		 * (should hide)
-		 */
-		JLabel highest = new JLabel();
-		highest.setLocation(750, 150);
-		highest.setSize(150, 30);
-		highest.setOpaque(true);
-		highest.setBackground(Color.BLACK);
-		highest.setForeground(Color.WHITE);
-		highest.setFont(new Font("New Romance", Font.BOLD, 32));
-		add(highest);
-
+		
 		/*
 		 * feed back
 		 * 

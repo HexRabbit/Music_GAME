@@ -116,14 +116,17 @@ public class MyLabel extends JLabel implements KeyListener{
 						Main.assess.setText("Bad");
 						Main.assess.setForeground(Color.red);
 						Main.grade += 50;
+						Main.combo.setText("combo " + ++Main.comboCount);
 					} else if(getY() < 575 || getY() >= 595) { //good
 						Main.assess.setText("Good");
 						Main.grade += 100;
 						Main.assess.setForeground(Color.yellow);
+						Main.combo.setText("combo " + ++Main.comboCount);
 					} else if(getY() >= 575 && getY() < 595) { //perfect
 						Main.assess.setText("Perfect");
 						Main.assess.setForeground(Color.GREEN);
 						Main.grade += 200;
+						Main.combo.setText("combo " + ++Main.comboCount);
 					}
 					parent.remove(this);
 					parent.repaint();

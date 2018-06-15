@@ -115,11 +115,12 @@ public class Selection extends JFrame implements KeyListener {
 			e.printStackTrace();
 		}
 		
-		
+		image = image.getScaledInstance(192*2, 108*2, image.SCALE_DEFAULT);
 		BG = new JLabel(new ImageIcon(image));
 		//BG.setSize(192,108);
 		BG.setSize(192*2, 108*2);
 		BG.setLocation(0, 100);
+		
 		add(BG);
 
 		addKeyListener(this);

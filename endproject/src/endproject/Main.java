@@ -41,18 +41,23 @@ public class Main extends JFrame {
 	public static JLabel assess = new JLabel(); // record "Perfect", "Good"...
 	public static JLabel score = new JLabel();
 	public JLabel highest = new JLabel();
+	public static JLabel combo = new JLabel("combo");
+	
+	public static int comboCount;
 	public static int grade;
 
 	public static AudioPlayer mp3;
 	
 	public static JLabel[] feedback = new JLabel[4];
+	
+	public JLabel background = new JLabel();
+	
 	public Main(String song) {
 		setSize(900, 700);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(null);
 		
 		getContentPane().setBackground(Color.black);
-		
 		
 		
 		final JFXPanel fxPanel = new JFXPanel();
@@ -96,6 +101,21 @@ public class Main extends JFrame {
 
 		};
 
+		
+		/*
+		 * combo
+		 * 
+		 */
+		
+		combo.setOpaque(true);
+		combo.setForeground(Color.white);
+		combo.setBackground(Color.black);
+		combo.setLocation(300,200);
+		combo.setSize(200, 40);
+		combo.setFont(new Font("New Romance", Font.BOLD, 32));
+
+		add(combo);
+		
 		score_timer.schedule(check_score, 0, 50);
 
 		/*
@@ -199,7 +219,21 @@ public class Main extends JFrame {
 		}
 		highest.setText(Integer.toString(high));
 		
+		/*File backFile;
+		backFile = new File("src/4K-beatmaps/" + song + "/BG.jpg");
+		Image backimage = null;
+		try {
+			backimage = ImageIO.read(backFile);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		backimage = backimage.getScaledInstance(200, 70, image.SCALE_DEFAULT);
+		background.setSize(200, 700);
+		background.setLocation(700,0);
+		background.setIcon(new ImageIcon(backimage));
 		
+		add(background);*/
 		
 		
 		

@@ -66,6 +66,7 @@ public class Main extends JFrame {
 	public static int goodCount = 0;
 	public static int badCount = 0;
 	public static int missCount = 0;
+	public static int playwait = 3000;
 	public static String now_play;
 	public static AudioPlayer mp3;
 	
@@ -236,14 +237,7 @@ public class Main extends JFrame {
 		
 		int high = 0;
 		
-		System.out.println(song);
-		Song sng = SongReader.readFile("src/4K-beatmaps/" + song + "/" + song + ".osx");
-
-		File songFile;
-		songFile = new File("src/4K-beatmaps/" + song + "/audio.wav");
-		mp3 = AudioPlayer.createPlayer(songFile);
-		mp3.play();
-		
+		/* for testing purpose */
 		JButton re = new JButton();
 		re.setActionCommand("Result");
 		re.addActionListener(buttonListener);
@@ -253,6 +247,23 @@ public class Main extends JFrame {
 		re.setBackground(Color.black);
 		re.setSize(100, 30);
 		add(re);
+		
+		
+		/* Load song */
+		System.out.println(song);
+		Song sng = SongReader.readFile("src/4K-beatmaps/" + song + "/" + song + ".osx");
+		File songFile;
+		songFile = new File("src/4K-beatmaps/" + song + "/audio.wav");
+		mp3 = AudioPlayer.createPlayer(songFile);
+		
+		/* Add start & end timer to decrease latency */
+		Timer start_timer = new Timer();
+		TimerTask playStart = new TimerTask() {
+			public void run() {
+				// TODO Auto-generated method stub
+				mp3.play();
+			}
+		};
 		Timer end_timer = new Timer();
 		TimerTask result = new TimerTask() {
 			public void run() {
@@ -261,13 +272,16 @@ public class Main extends JFrame {
 			}
 		};
 		
-		end_timer.schedule(result,mp3.getAudioLength()/1000+5000);
+		start_timer.schedule(playStart, playwait);
+		end_timer.schedule(result,mp3.getAudioLength()/1000 + 1500 + playwait);
+		
 		begin_time = System.currentTimeMillis(); //for Pause
 		long start = System.currentTimeMillis();
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < sng.track.get(i).size(); j++) {
 				long end = System.currentTimeMillis();
-				l.add(new MyLabel(i, sng.track.get(i).get(j).start, sng.track.get(i).get(j).end, this, end - start));
+				System.out.println(end - start);
+				l.add(new MyLabel(i, sng.track.get(i).get(j).start, sng.track.get(i).get(j).end, this, end - start - playwait));
 				
 				if(sng.track.get(i).get(j).end == 0) {
 					high+=200;
@@ -286,6 +300,30 @@ public class Main extends JFrame {
 			add(back);
 		}
 		highest.setText(Integer.toString(high));
+		
+		/* Add key click sound */
+		this.addKeyListener(new KeyAdapter() {
+			boolean pressed = false;
+			File clickSoundFile = new File("src/res/clicksound.wav");
+			AudioPlayer clickSound = AudioPlayer.createPlayer(clickSoundFile);
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				char key = e.getKeyChar();
+				if((pressed == false) && (key == 'd' || key == 'f' || key == 'j' || key == 'k')) {
+					clickSound.setVolume(20);
+					clickSound.play();	
+					pressed = true;
+				}
+			}
+			@Override
+			public void keyReleased(KeyEvent e) {
+				char key = e.getKeyChar();
+				if(pressed == true && (key == 'd' || key == 'f' || key == 'j'|| key == 'k')) {
+					pressed = false;
+				}
+			}
+		});
 	}
 
 	public void restart(String song) {
@@ -430,5 +468,30 @@ public class Main extends JFrame {
 			}
 		}
 		highest.setText(Integer.toString(high));
+		
+		/* Add key press sound */
+		this.addKeyListener(new KeyAdapter() {
+			boolean pressed = false;
+			File clickSoundFile = new File("src/res/clicksound.wav");
+			AudioPlayer clickSound = AudioPlayer.createPlayer(clickSoundFile);
+			
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				char key = e.getKeyChar();
+				if((pressed == false) && (key == 'd' || key == 'f' || key == 'j' || key == 'k')) {
+					clickSound.setVolume(20);
+					clickSound.play();	
+					pressed = true;
+				}
+			}
+			@Override
+			public void keyReleased(KeyEvent e) {
+				char key = e.getKeyChar();
+				if(pressed == true && (key == 'd' || key == 'f' || key == 'j'|| key == 'k')) {
+					pressed = false;
+				}
+			}
+		});
 	}
 }

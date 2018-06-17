@@ -32,14 +32,16 @@ public class MyLabel extends JLabel implements KeyListener {
 	public Remove remove;
 	public Show show;
 	public Move move;
-	Timer move_timer = new Timer();
-	Timer show_timer = new Timer();
-	Timer remove_timer = new Timer();
+	public Timer move_timer;// = new Timer();
+	public Timer show_timer;// = new Timer();
+	public Timer remove_timer;// = new Timer();
 	public int block_size = 20;
 	boolean hold = false;
 
 	public MyLabel(int col, long begin, long end, Container c, long time_elapsed) {
-
+		move_timer = new Timer();
+		show_timer = new Timer();
+		remove_timer = new Timer();
 		ImageIcon icon = new ImageIcon("src/endproject/block.png");
 		setIcon(icon);
 
@@ -80,20 +82,7 @@ public class MyLabel extends JLabel implements KeyListener {
 	public void keyPressed(KeyEvent arg0) {
 			
 		// TODO Auto-generated method stub
-		switch (arg0.getKeyChar()) {
-		case 'd':
-			Main.feedback[0].setVisible(true);
-			break;
-		case 'f':
-			Main.feedback[1].setVisible(true);
-			break;
-		case 'j':
-			Main.feedback[2].setVisible(true);
-			break;
-		case 'k':
-			Main.feedback[3].setVisible(true);
-			break;
-		}
+		
 		if (e > 0 && getY() + block_size > 555 && getY() + block_size < 615) { // is long press
 			hold = true;
 			switch (arg0.getKeyChar()) {
@@ -119,40 +108,40 @@ public class MyLabel extends JLabel implements KeyListener {
 				(column == 2 && key == 'j') ||
 				(column == 3 && key == 'k')) {
 				if (getY() < 555 || getY() >= 615) { // bad
-					Main.assess.setText("Bad");
-					Main.assess.setForeground(Color.red);
-					Main.grade += Remove.score_get;
-					Main.combo.setText("combo " + ++Main.comboCount);
-					Main.badCount++;
-					Main.ab+=1;
+					Selection.frame1.assess.setText("Bad");
+					Selection.frame1.assess.setForeground(Color.red);
+					Selection.frame1.grade += Remove.score_get;
+					Selection.frame1.combo.setText("combo " + ++Selection.frame1.comboCount);
+					Selection.frame1.badCount++;
+					Selection.frame1.ab+=1;
 				} else if (getY() < 575 || getY() >= 595) { // good
-					Main.assess.setText("Good");
-					Main.grade += Remove.score_get * 2;
-					Main.assess.setForeground(Color.yellow);
-					Main.combo.setText("combo " + ++Main.comboCount);
-					Main.goodCount++;
-					Main.ab+=2;
+					Selection.frame1.assess.setText("Good");
+					Selection.frame1.grade += Remove.score_get * 2;
+					Selection.frame1.assess.setForeground(Color.yellow);
+					Selection.frame1.combo.setText("combo " + ++Selection.frame1.comboCount);
+					Selection.frame1.goodCount++;
+					Selection.frame1.ab+=2;
 				} else if (getY() >= 575 && getY() < 595) { // perfect
-					Main.assess.setText("Perfect");
-					Main.assess.setForeground(Color.GREEN);
-					Main.grade += Remove.score_get * 4;
-					Main.combo.setText("combo " + ++Main.comboCount);
-					Main.perfectCount++;
-					Main.ab+=4;
+					Selection.frame1.assess.setText("Perfect");
+					Selection.frame1.assess.setForeground(Color.GREEN);
+					Selection.frame1.grade += Remove.score_get * 4;
+					Selection.frame1.combo.setText("combo " + ++Selection.frame1.comboCount);
+					Selection.frame1.perfectCount++;
+					Selection.frame1.ab+=4;
 				}
 				
-				if(Main.comboCount >= Main.maxCombo)
-					Main.maxCombo = Main.comboCount;
+				if(Selection.frame1.comboCount >= Selection.frame1.maxCombo)
+					Selection.frame1.maxCombo = Selection.frame1.comboCount;
 				
-				Main.aa+=4;
-				int x = (int) (((Main.ab*100)/Main.aa)*100);
+				Selection.frame1.aa+=4;
+				int x = (int) (((Selection.frame1.ab*100)/Selection.frame1.aa)*100);
 				double xx = x/100.0;
-				Main.accuracy.setText(String.valueOf(xx)+"%");
+				Selection.frame1.accuracy.setText(String.valueOf(xx)+"%");
 				if(xx<60) {
-					Main.accuracy.setForeground(Color.red);
+					Selection.frame1.accuracy.setForeground(Color.red);
 				}
 				else {
-					Main.accuracy.setForeground(Color.green);
+					Selection.frame1.accuracy.setForeground(Color.green);
 				}
 				
 				parent.remove(this);
@@ -171,19 +160,15 @@ public class MyLabel extends JLabel implements KeyListener {
 		switch (arg0.getKeyChar()) {
 		case 'd':
 			remove.Ddown = false;
-			Main.feedback[0].setVisible(false);
 			break;
 		case 'f':
 			remove.Fdown = false;
-			Main.feedback[1].setVisible(false);
 			break;
 		case 'j':
 			remove.Jdown = false;
-			Main.feedback[2].setVisible(false);
 			break;
 		case 'k':
 			remove.Kdown = false;
-			Main.feedback[3].setVisible(false);
 			break;
 		}
 

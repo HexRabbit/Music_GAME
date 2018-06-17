@@ -30,7 +30,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
-import javafx.embed.swing.JFXPanel;
+//import javafx.embed.swing.JFXPanel;
 
 import org.magiclen.magicaudioplayer.*;
 
@@ -43,36 +43,36 @@ public class Main extends JFrame {
 	 * frame.setVisible(true); //Selection(); }
 	 */
 
-	// private JLabel l;
-	public static long begin_time;
-	public static LinkedList<MyLabel> l = new LinkedList<MyLabel>();
-	public static JButton pause = new JButton("Pause");
-
-	public static JLabel assess = new JLabel(); // record "Perfect", "Good"...
-	public static JLabel score = new JLabel();
-	public JLabel highest = new JLabel();
-	public static JLabel combo = new JLabel("combo");
+	
+	
+	
 	
 
-	public static JLabel accuracy = new JLabel("0.00%");
-	public static double aa;
-	public static double ab;
-	public static JLabel accuracy_word = new JLabel("Accuracy:");
+	public JLabel assess;// = new JLabel(); // record "Perfect", "Good"...
 	
-	public static int comboCount;
-	public static int maxCombo = 0;
-	public static int grade;
-	public static int perfectCount = 0;
-	public static int goodCount = 0;
-	public static int badCount = 0;
-	public static int missCount = 0;
-	public static int playwait = 3000;
-	public static String now_play;
-	public static AudioPlayer mp3;
+	public JLabel highest;// = new JLabel();
+	public JLabel combo;// = new JLabel("combo");
 	
-	public static JLabel[] feedback = new JLabel[4];
+
+	public JLabel accuracy;// = new JLabel("0.00%");
+	public double aa;
+	public double ab;
+	public JLabel accuracy_word;// = new JLabel("Accuracy:");
 	
-	public JLabel background = new JLabel();
+	public int comboCount;
+	public int maxCombo = 0;
+	public int grade;
+	public int perfectCount = 0;
+	public int goodCount = 0;
+	public int badCount = 0;
+	public int missCount = 0;
+	public int playwait = 3000;
+	public String now_play;
+	public AudioPlayer mp3;
+	
+	public LinkedList<MyLabel> l;// = new LinkedList<MyLabel>();
+	
+	//public JLabel background;// = new JLabel();
 	
 	public Main(String song) {
 		now_play = song;
@@ -83,11 +83,12 @@ public class Main extends JFrame {
 		getContentPane().setBackground(Color.black);
 		
 		
-		final JFXPanel fxPanel = new JFXPanel();
-
-		pause.setActionCommand("pause");
-		MyButtonListener buttonListener = new MyButtonListener();
-		pause.addActionListener(buttonListener);
+		//final JFXPanel fxPanel = new JFXPanel();
+		
+		JButton pause = new JButton("Pause");
+		//pause.setActionCommand("pause");
+		
+		
 		pause.setFocusable(false);
 		pause.setLocation(800, 50);
 		pause.setOpaque(true);
@@ -97,6 +98,7 @@ public class Main extends JFrame {
 
 		JButton back = new JButton("back");
 		back.setActionCommand("back");
+		MyButtonListener buttonListener = new MyButtonListener();
 		back.addActionListener(buttonListener);
 		back.setFocusable(false);
 		back.setLocation(800, 80);
@@ -105,7 +107,7 @@ public class Main extends JFrame {
 		back.setSize(100, 30);
 		add(back);
 		
-		
+		JLabel score = new JLabel();
 		score.setOpaque(true);
 		score.setForeground(Color.white);
 		score.setBackground(Color.black);
@@ -130,7 +132,7 @@ public class Main extends JFrame {
 		 * combo
 		 * 
 		 */
-		
+		combo = new JLabel("combo");
 		combo.setOpaque(true);
 		combo.setForeground(Color.white);
 		combo.setBackground(Color.black);
@@ -142,7 +144,7 @@ public class Main extends JFrame {
 		
 		score_timer.schedule(check_score, 0, 50);
 		
-
+		accuracy_word = new JLabel("Accuracy:");
 		accuracy_word.setOpaque(true);
 		accuracy_word.setForeground(Color.white);
 		accuracy_word.setBackground(Color.black);
@@ -151,6 +153,7 @@ public class Main extends JFrame {
 		accuracy_word.setFont(new Font("New Romance", Font.BOLD, 32));
 		add(accuracy_word);
 		
+		accuracy = new JLabel("0.00%");
 		accuracy.setOpaque(true);
 		accuracy.setForeground(Color.white);
 		accuracy.setBackground(Color.black);
@@ -163,6 +166,7 @@ public class Main extends JFrame {
 		/*
 		 * to print out how performance you get
 		 */
+		assess = new JLabel(); 
 		assess.setLocation(330, 330);
 		assess.setSize(120, 40);
 		assess.setFont(new Font("New Romance", Font.BOLD, 32));
@@ -204,7 +208,7 @@ public class Main extends JFrame {
 		 * show the highest score should get in this game
 		 * (should hide)
 		 */
-		
+		highest = new JLabel();
 		highest.setLocation(750, 150);
 		highest.setSize(150, 30);
 		highest.setOpaque(true);
@@ -227,6 +231,7 @@ public class Main extends JFrame {
 			e.printStackTrace();
 		}
 		
+		JLabel[] feedback = new JLabel[4];
 		for(int i = 0; i < 4; i++) {
 			feedback[i] = new JLabel(new ImageIcon(image1));
 			feedback[i].setLocation(75 + 150*i, 575);
@@ -275,8 +280,26 @@ public class Main extends JFrame {
 		start_timer.schedule(playStart, playwait);
 		end_timer.schedule(result,mp3.getAudioLength()/1000 + 1500 + playwait);
 		
-		begin_time = System.currentTimeMillis(); //for Pause
-		long start = System.currentTimeMillis();
+		
+		final long start = System.currentTimeMillis();
+		l = new LinkedList<MyLabel>();
+		
+		pause.addActionListener(new ActionListener() { 
+			  public void actionPerformed(ActionEvent e) { 
+				  if(pause.getText() == "Pause") {
+						new Pause(start, l);
+					
+						pause.setText("Resume");
+						
+					} else if(pause.getText() == "Resume") {
+						new Resume(start, l);
+						pause.setText("Pause");
+						pause.setFocusable(false);
+					}
+				  } 
+				} );
+		
+		
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < sng.track.get(i).size(); j++) {
 				long end = System.currentTimeMillis();
@@ -310,188 +333,42 @@ public class Main extends JFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				char key = e.getKeyChar();
+				switch(key) {
+				case 'd':feedback[0].setVisible(true);
+					break;
+				case 'f':feedback[1].setVisible(true);
+					break;
+				case 'j':feedback[2].setVisible(true);
+					break;
+				case 'k':feedback[3].setVisible(true);
+					break;
+				}
 				if((pressed == false) && (key == 'd' || key == 'f' || key == 'j' || key == 'k')) {
 					clickSound.setVolume(20);
 					clickSound.play();	
 					pressed = true;
+					
 				}
 			}
 			@Override
 			public void keyReleased(KeyEvent e) {
 				char key = e.getKeyChar();
+				switch(key) {
+				case 'd':feedback[0].setVisible(false);
+					break;
+				case 'f':feedback[1].setVisible(false);
+					break;
+				case 'j':feedback[2].setVisible(false);
+					break;
+				case 'k':feedback[3].setVisible(false);
+					break;
+				}
 				if(pressed == true && (key == 'd' || key == 'f' || key == 'j'|| key == 'k')) {
 					pressed = false;
+					
 				}
 			}
 		});
 	}
 
-	public void restart(String song) {
-		
-		aa=0;
-		ab=0;
-		
-		setSize(900, 700);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLayout(null);
-		
-		getContentPane().setBackground(Color.black);
-		
-		
-		
-		final JFXPanel fxPanel = new JFXPanel();
-
-		pause.setActionCommand("pause");
-		MyButtonListener buttonListener = new MyButtonListener();
-		pause.addActionListener(buttonListener);
-		pause.setFocusable(false);
-		pause.setLocation(800, 50);
-		pause.setOpaque(true);
-		pause.setBackground(Color.black);
-		pause.setSize(100, 30);
-		add(pause);
-
-		JButton back = new JButton("back");
-		back.setActionCommand("back");
-		back.addActionListener(buttonListener);
-		back.setFocusable(false);
-		back.setLocation(800, 80);
-		back.setOpaque(true);
-		back.setBackground(Color.black);
-		back.setSize(100, 30);
-		add(back);
-		
-		grade = 0;
-		Timer score_timer = new Timer();
-		TimerTask check_score = new TimerTask() {
-
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				score.setText(Integer.toString(grade));
-			}
-
-		};
-
-		score_timer.schedule(check_score, 0, 50);
-
-		
-
-		/*
-		 * add background
-		 */
-		File infile = new File("src/endproject/line.png");
-		Image image = null;
-		try {
-			image = ImageIO.read(infile);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		JLabel line = new JLabel(new ImageIcon(image));
-		line.setLocation(75, 0);
-		line.setSize(600, 700);
-		add(line);
-		
-		/*
-		 * hide block < 75
-		 */
-		JLabel wall = new JLabel();
-		wall.setLocation(0, 0);
-		wall.setSize(800, 120);
-		wall.setOpaque(true);
-		wall.setBackground(Color.BLACK);
-		add(wall);
-		
-		
-		/*
-		 * feed back
-		 * 
-		 */
-		File feed = new File("src/endproject/rec.png");
-		Image image1 = null;
-		try {
-			image1 = ImageIO.read(feed);
-			System.out.print(image1);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		/*for(int i = 0; i < 4; i++) {
-			feedback[i] = new JLabel(new ImageIcon(image1));
-			feedback[i].setLocation(75 + 150*i, 575);
-			feedback[i].setSize(150,35);
-			feedback[i].setVisible(false);
-			add(feedback[i]);
-		}*/
-		
-		int high = 0;
-		
-		System.out.println(song);
-		Song sng = SongReader.readFile("src/4K-beatmaps/" + song + "/" + song + ".osx");
-
-		File songFile;
-		songFile = new File("src/4K-beatmaps/" + song + "/audio.wav");
-		mp3 = AudioPlayer.createPlayer(songFile);
-		mp3.play();
-		
-		while(l.isEmpty() == false) {
-			l.getLast().move_timer.cancel();
-			l.getLast().remove_timer.cancel();
-			l.getLast().show_timer.cancel();
-			l.getLast().move_timer.purge();
-			l.getLast().remove_timer.purge();
-			l.getLast().show_timer.purge();
-			remove(l.getLast());
-			removeKeyListener(l.getLast());
-			l.remove(l.size()-1);
-		}
-		repaint();
-		l.clear();
-		
-				
-				
-		begin_time = System.currentTimeMillis(); //for Pause
-		long start = System.currentTimeMillis();
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < sng.track.get(i).size(); j++) {
-				long end = System.currentTimeMillis();
-				l.add(new MyLabel(i, sng.track.get(i).get(j).start, sng.track.get(i).get(j).end, this, end - start));
-				
-				if(sng.track.get(i).get(j).end == 0) {
-					high+=200;
-				} else {
-					high += (sng.track.get(i).get(j).end - sng.track.get(i).get(j).start)/40*200; 
-				}
-			}
-		}
-		highest.setText(Integer.toString(high));
-		
-		/* Add key press sound */
-		this.addKeyListener(new KeyAdapter() {
-			boolean pressed = false;
-			File clickSoundFile = new File("src/res/clicksound.wav");
-			AudioPlayer clickSound = AudioPlayer.createPlayer(clickSoundFile);
-			
-			
-			@Override
-			public void keyPressed(KeyEvent e) {
-				char key = e.getKeyChar();
-				if((pressed == false) && (key == 'd' || key == 'f' || key == 'j' || key == 'k')) {
-					clickSound.setVolume(20);
-					clickSound.play();	
-					pressed = true;
-				}
-			}
-			@Override
-			public void keyReleased(KeyEvent e) {
-				char key = e.getKeyChar();
-				if(pressed == true && (key == 'd' || key == 'f' || key == 'j'|| key == 'k')) {
-					pressed = false;
-				}
-			}
-		});
-	}
 }

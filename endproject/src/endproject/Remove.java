@@ -34,26 +34,26 @@ public class Remove extends TimerTask {
 			}
 		}*/
 		if (!label.hold && label.getY() + label.block_size > 700) {
-			Main.assess.setText("Miss");
-			Main.assess.setForeground(Color.pink);
+			Selection.frame1.assess.setText("Miss");
+			Selection.frame1.assess.setForeground(Color.pink);
 			parent.remove(label);
 			parent.repaint();
-			++Main.missCount;
+			++Selection.frame1.missCount;
 			parent.removeKeyListener(label);
 			label.remove_timer.cancel();
 			label.remove_timer.purge();
-			Main.combo.setText("combo 0");
-			Main.comboCount = 0;
+			Selection.frame1.combo.setText("combo 0");
+			Selection.frame1.comboCount = 0;
 			
-			Main.aa+=4;
-			int x = (int) (((Main.ab*100)/Main.aa)*100);
+			Selection.frame1.aa+=4;
+			int x = (int) (((Selection.frame1.ab*100)/Selection.frame1.aa)*100);
 			double xx = x/100.0;
-			Main.accuracy.setText(String.valueOf(xx)+"%");
+			Selection.frame1.accuracy.setText(String.valueOf(xx)+"%");
 			if(xx<60) {
-				Main.accuracy.setForeground(Color.red);
+				Selection.frame1.accuracy.setForeground(Color.red);
 			}
 			else {
-				Main.accuracy.setForeground(Color.green);
+				Selection.frame1.accuracy.setForeground(Color.green);
 			}
 			
 		} else if (label.hold) {
@@ -61,40 +61,40 @@ public class Remove extends TimerTask {
 					|| (label.column == 2 && Jdown == false) || (label.column == 3 && Kdown == false)) {
 
 				if (label.getY() < 555 || label.getY() >= 615) { // bad
-					Main.assess.setText("Bad");
-					Main.assess.setForeground(Color.red);
-					Main.grade += label.block_size / 20 * score_get;
-					Main.combo.setText("combo " + ++Main.comboCount);
-					Main.badCount++;
-					Main.ab+=1;
+					Selection.frame1.assess.setText("Bad");
+					Selection.frame1.assess.setForeground(Color.red);
+					Selection.frame1.grade += label.block_size / 20 * score_get;
+					Selection.frame1.combo.setText("combo " + ++Selection.frame1.comboCount);
+					Selection.frame1.badCount++;
+					Selection.frame1.ab+=1;
 				} else if (label.getY() < 575 || label.getY() >= 595) { // good
-					Main.assess.setText("Good");
-					Main.assess.setForeground(Color.yellow);
-					Main.grade += label.block_size / 20 * score_get * 2;
-					Main.combo.setText("combo " + ++Main.comboCount);
-					Main.goodCount++;
-					Main.ab+=2;
+					Selection.frame1.assess.setText("Good");
+					Selection.frame1.assess.setForeground(Color.yellow);
+					Selection.frame1.grade += label.block_size / 20 * score_get * 2;
+					Selection.frame1.combo.setText("combo " + ++Selection.frame1.comboCount);
+					Selection.frame1.goodCount++;
+					Selection.frame1.ab+=2;
 				} else if (label.getY() >= 575 && label.getY() < 595) { // perfect
-					Main.assess.setText("Perfect");
-					Main.assess.setForeground(Color.GREEN);
-					Main.grade += label.block_size / 20 * score_get * 4;
-					Main.combo.setText("combo " + ++Main.comboCount);
-					Main.perfectCount++;
-					Main.ab+=4;
+					Selection.frame1.assess.setText("Perfect");
+					Selection.frame1.assess.setForeground(Color.GREEN);
+					Selection.frame1.grade += label.block_size / 20 * score_get * 4;
+					Selection.frame1.combo.setText("combo " + ++Selection.frame1.comboCount);
+					Selection.frame1.perfectCount++;
+					Selection.frame1.ab+=4;
 				}
 				
-				if(Main.comboCount >= Main.maxCombo)
-					Main.maxCombo = Main.comboCount;
+				if(Selection.frame1.comboCount >= Selection.frame1.maxCombo)
+					Selection.frame1.maxCombo = Selection.frame1.comboCount;
 				
-				Main.aa+=4;
-				int x = (int) (((Main.ab*100)/Main.aa)*100);
+				Selection.frame1.aa+=4;
+				int x = (int) (((Selection.frame1.ab*100)/Selection.frame1.aa)*100);
 				double xx = x/100.0;
-				Main.accuracy.setText(String.valueOf(xx)+"%");
+				Selection.frame1.accuracy.setText(String.valueOf(xx)+"%");
 				if(xx<60) {
-					Main.accuracy.setForeground(Color.red);
+					Selection.frame1.accuracy.setForeground(Color.red);
 				}
 				else {
-					Main.accuracy.setForeground(Color.green);
+					Selection.frame1.accuracy.setForeground(Color.green);
 				}
 				
 				parent.remove(label);

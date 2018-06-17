@@ -1,20 +1,29 @@
 package endproject;
 
+import java.applet.AudioClip;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -25,9 +34,10 @@ import javafx.embed.swing.JFXPanel;
 
 import org.magiclen.magicaudioplayer.*;
 
-public class Main extends JFrame {
-	private static final long serialVersionUID = 1L;
 
+public class Main extends JFrame {
+	
+	private static final long serialVersionUID = 1L;
 	/*
 	 * public static void main(String[] args) { Main frame = new Main();
 	 * frame.setVisible(true); //Selection(); }
@@ -41,18 +51,28 @@ public class Main extends JFrame {
 	public static JLabel assess = new JLabel(); // record "Perfect", "Good"...
 	public static JLabel score = new JLabel();
 	public JLabel highest = new JLabel();
+	public static JLabel combo = new JLabel("combo");
+	
+	public static JLabel accuracy = new JLabel("0.00%");
+	public static double aa;
+	public static double ab;
+	public static JLabel accuracy_word = new JLabel("Accuracy:");
+	
+	public static int comboCount;
 	public static int grade;
 
 	public static AudioPlayer mp3;
 	
 	public static JLabel[] feedback = new JLabel[4];
+	
+	public JLabel background = new JLabel();
+	
 	public Main(String song) {
 		setSize(900, 700);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(null);
 		
 		getContentPane().setBackground(Color.black);
-		
 		
 		
 		final JFXPanel fxPanel = new JFXPanel();
@@ -77,6 +97,7 @@ public class Main extends JFrame {
 		back.setSize(100, 30);
 		add(back);
 		
+		
 		score.setOpaque(true);
 		score.setForeground(Color.white);
 		score.setBackground(Color.black);
@@ -95,8 +116,39 @@ public class Main extends JFrame {
 			}
 
 		};
+		
+		
+		/*
+		 * combo
+		 * 
+		 */
+		
+		combo.setOpaque(true);
+		combo.setForeground(Color.white);
+		combo.setBackground(Color.black);
+		combo.setLocation(300,200);
+		combo.setSize(200, 40);
+		combo.setFont(new Font("New Romance", Font.BOLD, 32));
 
+		add(combo);
+		
 		score_timer.schedule(check_score, 0, 50);
+		
+		accuracy_word.setOpaque(true);
+		accuracy_word.setForeground(Color.white);
+		accuracy_word.setBackground(Color.black);
+		accuracy_word.setLocation(700, 220);
+		accuracy_word.setSize(200, 30);
+		accuracy_word.setFont(new Font("New Romance", Font.BOLD, 32));
+		add(accuracy_word);
+		
+		accuracy.setOpaque(true);
+		accuracy.setForeground(Color.white);
+		accuracy.setBackground(Color.black);
+		accuracy.setLocation(725, 250);
+		accuracy.setSize(150, 30);
+		accuracy.setFont(new Font("New Romance", Font.BOLD, 32));
+		add(accuracy);
 
 		/*
 		 * to print out how performance you get
@@ -197,9 +249,45 @@ public class Main extends JFrame {
 				}
 			}
 		}
+		if(Remove.hidden == true) {
+			high *= 1.5;
+		}
 		highest.setText(Integer.toString(high));
 		
+		this.addKeyListener(new KeyAdapter() {
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+					
+					
+				/*try {
+					Clip clip = AudioSystem.getClip();
+					AudioInputStream ais = AudioSystem.getAudioInputStream(Main.class.getResourceAsStream("/applaus.wav"));
+					clip.open(ais);
+					
+					
+				} catch (Exception ee) {
+					ee.printStackTrace();
+				}*/
+				 
 		
+			}});
+		
+		/*File backFile;
+		backFile = new File("src/4K-beatmaps/" + song + "/BG.jpg");
+		Image backimage = null;
+		try {
+			backimage = ImageIO.read(backFile);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		backimage = backimage.getScaledInstance(200, 70, image.SCALE_DEFAULT);
+		background.setSize(200, 700);
+		background.setLocation(700,0);
+		background.setIcon(new ImageIcon(backimage));
+		
+		add(background);*/
 		
 		
 		
@@ -256,6 +344,10 @@ public class Main extends JFrame {
 	}
 
 	public void restart(String song) {
+		
+		aa=0;
+		ab=0;
+		
 		setSize(900, 700);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(null);

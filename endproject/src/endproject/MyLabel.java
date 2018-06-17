@@ -52,14 +52,14 @@ public class MyLabel extends JLabel implements KeyListener{
 		remove = new Remove(this, c);
 		
 		begin = begin - time_elapsed;
-		if(begin < 1000) { //1000ms為block 從上面掉下來所需的時間
+		if(begin < 1000) { //1000ms�block 敺�������������
 			begin = 1000;
 		}
 		
 		//System.out.println(time_elapsed);
 		show_timer.schedule(show, begin-1000);     //show the label when (begin-1000)
-		move_timer.scheduleAtFixedRate(move, begin-1000, 2); //(575-75)*2 = (底-初始位置) / (每2ms往下1)
-		remove_timer.scheduleAtFixedRate(remove, begin-1000, 2);      //每2ms判斷一次是否要刪掉label
+		move_timer.scheduleAtFixedRate(move, begin-1000, 2); //(575-75)*2 = (摨�-����蔭) / (瘥�2ms敺�銝�1)
+		remove_timer.scheduleAtFixedRate(remove, begin-1000, 2);      //瘥�2ms��銝�甈⊥�閬��abel
 		
 		
 		c.addKeyListener(this); //add KeyListener to JFrame
@@ -116,17 +116,26 @@ public class MyLabel extends JLabel implements KeyListener{
 						Main.assess.setText("Bad");
 						Main.assess.setForeground(Color.red);
 						Main.grade += 50;
+						Main.badCount++;
 						Main.combo.setText("combo " + ++Main.comboCount);
+						if(Main.comboCount >= Main.maxCombo)
+							Main.maxCombo = Main.comboCount;
 					} else if(getY() < 575 || getY() >= 595) { //good
 						Main.assess.setText("Good");
 						Main.grade += 100;
+						Main.goodCount++;
 						Main.assess.setForeground(Color.yellow);
 						Main.combo.setText("combo " + ++Main.comboCount);
+						if(Main.comboCount >= Main.maxCombo)
+							Main.maxCombo = Main.comboCount;
 					} else if(getY() >= 575 && getY() < 595) { //perfect
 						Main.assess.setText("Perfect");
 						Main.assess.setForeground(Color.GREEN);
 						Main.grade += 200;
+						Main.perfectCount++;
 						Main.combo.setText("combo " + ++Main.comboCount);
+						if(Main.comboCount >= Main.maxCombo)
+							Main.maxCombo = Main.comboCount;
 					}
 					parent.remove(this);
 					parent.repaint();

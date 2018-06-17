@@ -44,7 +44,7 @@ public class Selection extends JFrame implements KeyListener {
 	private static int m;
     static Main frame1;
     static Selection frame;
-    
+    static Result frame2;
     public static File songFile = new File("src/4K-beatmaps/" + list1[m] + "/audio.wav");
     public static AudioPlayer mp3 = AudioPlayer.createPlayer(songFile);
     
@@ -117,7 +117,7 @@ public class Selection extends JFrame implements KeyListener {
 		
 		image = image.getScaledInstance(192*2, 108*2, image.SCALE_DEFAULT);
 		BG = new JLabel(new ImageIcon(image));
-		//BG.setSize(192,108);
+		
 		BG.setSize(192*2, 108*2);
 		BG.setLocation(0, 100);
 		

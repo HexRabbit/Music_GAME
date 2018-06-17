@@ -38,6 +38,7 @@ public class Remove extends TimerTask {
 			Main.assess.setForeground(Color.pink);
 			parent.remove(label);
 			parent.repaint();
+			++Main.missCount;
 			parent.removeKeyListener(label);
 			label.remove_timer.cancel();
 			label.remove_timer.purge();
@@ -64,20 +65,26 @@ public class Remove extends TimerTask {
 					Main.assess.setForeground(Color.red);
 					Main.grade += label.block_size / 20 * score_get;
 					Main.combo.setText("combo " + ++Main.comboCount);
+					Main.badCount++;
 					Main.ab+=1;
 				} else if (label.getY() < 575 || label.getY() >= 595) { // good
 					Main.assess.setText("Good");
 					Main.assess.setForeground(Color.yellow);
 					Main.grade += label.block_size / 20 * score_get * 2;
-					Main.combo.setText("combo " + ++Main.comboCount);					
+					Main.combo.setText("combo " + ++Main.comboCount);
+					Main.goodCount++;
 					Main.ab+=2;
 				} else if (label.getY() >= 575 && label.getY() < 595) { // perfect
 					Main.assess.setText("Perfect");
 					Main.assess.setForeground(Color.GREEN);
 					Main.grade += label.block_size / 20 * score_get * 4;
 					Main.combo.setText("combo " + ++Main.comboCount);
+					Main.perfectCount++;
 					Main.ab+=4;
 				}
+				
+				if(Main.comboCount >= Main.maxCombo)
+					Main.maxCombo = Main.comboCount;
 				
 				Main.aa+=4;
 				int x = (int) (((Main.ab*100)/Main.aa)*100);

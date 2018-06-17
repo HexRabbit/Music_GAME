@@ -56,14 +56,14 @@ public class MyLabel extends JLabel implements KeyListener {
 		remove = new Remove(this, c);
 
 		begin = begin - time_elapsed;
-		if (begin < 1000) { // 1000ms嚙踐冪block �豯�嚙踝��蕭嚙踝嚙踝�蕭��蕭嚙踝蕭嚙踝蕭��蕭蹇蕭嚙�
+		if (begin < 1000) { // 1000ms for block to fall
 			begin = 1000;
 		}
 
 		// System.out.println(time_elapsed);
 		show_timer.schedule(show, begin - 1000); // show the label when (begin-1000)
-		move_timer.scheduleAtFixedRate(move, begin - 1000, 2); // (575-75)*2 = (�嚙�-嚙踝蕭豲蕭��蕭��) / (�嚙�2ms�嚙賡�蕭1)
-		remove_timer.scheduleAtFixedRate(remove, begin - 1000, 2); // �嚙�2ms嚙踝�蕭謘�蕭��謢�嚙踐�蹓鳴�蕭嚙踝�bel
+		move_timer.scheduleAtFixedRate(move, begin - 1000, 2); //(575-75)*2 = (底-初始位置) / (每2ms往下1)
+		remove_timer.scheduleAtFixedRate(remove, begin - 1000, 2); // 每2ms判斷一次是否要刪掉label
 
 		c.addKeyListener(this); // add KeyListener to JFrame
 		c.setFocusable(true);
@@ -114,27 +114,35 @@ public class MyLabel extends JLabel implements KeyListener {
 			// e == 0 will help avoid long press step into this if-condition
 			char key = arg0.getKeyChar();
 
-			if ((column == 0 && key == 'd') || (column == 1 && key == 'f') || (column == 2 && key == 'j')
-					|| (column == 3 && key == 'k')) {
+			if ((column == 0 && key == 'd') || 
+			    (column == 1 && key == 'f') ||
+				(column == 2 && key == 'j') ||
+				(column == 3 && key == 'k')) {
 				if (getY() < 555 || getY() >= 615) { // bad
 					Main.assess.setText("Bad");
 					Main.assess.setForeground(Color.red);
 					Main.grade += Remove.score_get;
 					Main.combo.setText("combo " + ++Main.comboCount);
+					Main.badCount++;
 					Main.ab+=1;
 				} else if (getY() < 575 || getY() >= 595) { // good
 					Main.assess.setText("Good");
 					Main.grade += Remove.score_get * 2;
 					Main.assess.setForeground(Color.yellow);
 					Main.combo.setText("combo " + ++Main.comboCount);
+					Main.goodCount++;
 					Main.ab+=2;
 				} else if (getY() >= 575 && getY() < 595) { // perfect
 					Main.assess.setText("Perfect");
 					Main.assess.setForeground(Color.GREEN);
 					Main.grade += Remove.score_get * 4;
 					Main.combo.setText("combo " + ++Main.comboCount);
+					Main.perfectCount++;
 					Main.ab+=4;
 				}
+				
+				if(Main.comboCount >= Main.maxCombo)
+					Main.maxCombo = Main.comboCount;
 				
 				Main.aa+=4;
 				int x = (int) (((Main.ab*100)/Main.aa)*100);
@@ -146,6 +154,7 @@ public class MyLabel extends JLabel implements KeyListener {
 				else {
 					Main.accuracy.setForeground(Color.green);
 				}
+				
 				parent.remove(this);
 				parent.repaint();
 				parent.removeKeyListener(this);

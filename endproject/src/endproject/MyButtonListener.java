@@ -42,6 +42,13 @@ public class MyButtonListener implements ActionListener{
 			Selection.frame1.dispose();
 			//Selection.frame1 = null;
 			
+		} else if(arg0.getActionCommand() == "Result") {
+			
+			System.out.println("hi");
+			
+			Selection.frame2 = new Result(Selection.frame1.maxCombo,Selection.frame1.perfectCount,Selection.frame1.goodCount,Selection.frame1.badCount,Selection.frame1.missCount,Selection.frame1.grade,Selection.frame1.now_play);
+			Selection.frame2.setVisible(true);
+			Selection.frame1.dispose();
 		}
 	}
 

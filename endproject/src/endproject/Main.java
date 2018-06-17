@@ -60,8 +60,13 @@ public class Main extends JFrame {
 	public static JLabel accuracy_word = new JLabel("Accuracy:");
 	
 	public static int comboCount;
+	public static int maxCombo = 0;
 	public static int grade;
-
+	public static int perfectCount = 0;
+	public static int goodCount = 0;
+	public static int badCount = 0;
+	public static int missCount = 0;
+	public static String now_play;
 	public static AudioPlayer mp3;
 	
 	public static JLabel[] feedback = new JLabel[4];
@@ -69,6 +74,7 @@ public class Main extends JFrame {
 	public JLabel background = new JLabel();
 	
 	public Main(String song) {
+		now_play = song;
 		setSize(900, 700);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(null);
@@ -131,23 +137,11 @@ public class Main extends JFrame {
 		combo.setSize(200, 40);
 		combo.setFont(new Font("New Romance", Font.BOLD, 32));
 
-		
-		/*
-		 * combo
-		 * 
-		 */
-		
-		combo.setOpaque(true);
-		combo.setForeground(Color.white);
-		combo.setBackground(Color.black);
-		combo.setLocation(300,200);
-		combo.setSize(200, 40);
-		combo.setFont(new Font("New Romance", Font.BOLD, 32));
-
 		add(combo);
 		
 		score_timer.schedule(check_score, 0, 50);
 		
+
 		accuracy_word.setOpaque(true);
 		accuracy_word.setForeground(Color.white);
 		accuracy_word.setBackground(Color.black);
@@ -163,6 +157,7 @@ public class Main extends JFrame {
 		accuracy.setSize(150, 30);
 		accuracy.setFont(new Font("New Romance", Font.BOLD, 32));
 		add(accuracy);
+
 
 		/*
 		 * to print out how performance you get
@@ -249,6 +244,24 @@ public class Main extends JFrame {
 		mp3 = AudioPlayer.createPlayer(songFile);
 		mp3.play();
 		
+		JButton re = new JButton();
+		re.setActionCommand("Result");
+		re.addActionListener(buttonListener);
+		re.setFocusable(false);
+		re.setLocation(800, 100);
+		re.setOpaque(true);
+		re.setBackground(Color.black);
+		re.setSize(100, 30);
+		add(re);
+		Timer end_timer = new Timer();
+		TimerTask result = new TimerTask() {
+			public void run() {
+				// TODO Auto-generated method stub
+				re.doClick();
+			}
+		};
+		
+		end_timer.schedule(result,mp3.getAudioLength()/1000+5000);
 		begin_time = System.currentTimeMillis(); //for Pause
 		long start = System.currentTimeMillis();
 		for (int i = 0; i < 4; i++) {
@@ -273,76 +286,6 @@ public class Main extends JFrame {
 			add(back);
 		}
 		highest.setText(Integer.toString(high));
-		
-
-		/*File backFile;
-		backFile = new File("src/4K-beatmaps/" + song + "/BG.jpg");
-		Image backimage = null;
-		try {
-			backimage = ImageIO.read(backFile);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		backimage = backimage.getScaledInstance(200, 70, image.SCALE_DEFAULT);
-		background.setSize(200, 700);
-		background.setLocation(700,0);
-		background.setIcon(new ImageIcon(backimage));
-		
-		add(background);*/
-		
-		
-		
-		
-		/*
-		 * int i; int j; int b; Random r = new Random(); for(i = 0; i < 20; ++i) { j =
-		 * (int)(Math.random()*4);
-		 * 
-		 * b = r.nextInt(2); if(b == 0) l.add(new MyLabel(j, 2500+i*1250, 0, this));
-		 * else if(b == 1) l.add(new MyLabel(j, 2500+i*1250, 3700+i*1250, this));
-		 * //pause.addKeyListener(l.get(i)); }
-		 */
-
-		
-
-		
-
-		/*Timer end_timer = new Timer();
-		TimerTask endTask = new TimerTask() {
-			@Override
-			public void run() {
-				JLabel endLabel = new JLabel();
-				endLabel.setOpaque(true);
-				// endLabel.setBackground(Color.white);
-				endLabel.setForeground(Color.yellow);
-
-				if (grade > 50000) {
-					endLabel.setText("S");
-
-				} else if (grade > 40000) {
-					endLabel.setText("A");
-
-				} else if (grade > 30000) {
-					endLabel.setText("B");
-				} else if (grade > 20000) {
-					endLabel.setText("C");
-				} else if (grade > 10000) {
-					endLabel.setText("D");
-				} else {
-					endLabel.setText("F");
-				}
-				endLabel.setLocation(300, 200);
-				endLabel.setSize(300, 300);
-				endLabel.setFont(new Font("New Romance", Font.BOLD, 300));
-				add(endLabel);
-				System.out.println("grade");
-			}
-		};*/
-
-		// end_timer.schedule(endTask, 27450);
-		
-		
-	 
 	}
 
 	public void restart(String song) {
@@ -470,6 +413,8 @@ public class Main extends JFrame {
 		repaint();
 		l.clear();
 		
+				
+				
 		begin_time = System.currentTimeMillis(); //for Pause
 		long start = System.currentTimeMillis();
 		for (int i = 0; i < 4; i++) {

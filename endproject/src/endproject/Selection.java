@@ -23,25 +23,28 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Selection extends JFrame implements KeyListener {
-
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	static File folder1 = new File("src/4K-beatmaps");
 	static String[] list1 = folder1.list(new FilenameFilter() {
-        @Override
-        public boolean accept(File dir, String name) {
-            return !name.equals(".DS_Store");
-        }
-    });
+		@Override
+		public boolean accept(File dir, String name) {
+			return !name.equals(".DS_Store");
+		}
+	});
 	LinkedList<JButton> button = new LinkedList<JButton>();
 	JPanel[] panel = new JPanel[list1.length];
 	Image image = null;
 	File imagefile;
 	JLabel BG;
-
+	
+	String x = "off";
+	JLabel hidlabel = new JLabel("Hidden:"+x);
+	
 	private static int m;
+
     static Main frame1;
     static Selection frame;
     static Result frame2;
@@ -52,41 +55,40 @@ public class Selection extends JFrame implements KeyListener {
 
 		frame = new Selection();
 		frame.setVisible(true);
-		
-		//frame1 = new Main();
-		//frame1.setVisible(true);
-	}
 
-	
+		// frame1 = new Main();
+		// frame1.setVisible(true);
+	}
 
 	public Selection() {
 
 		setSize(900, 700);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		
+		
 		for (int i = 0; i < 5; ++i) {
 			panel[i] = new JPanel();
 			panel[i].setSize(300, 30);
 
 		}
-
+		
 		panel[0].setLocation(500, 50);
 		panel[1].setLocation(450, 80);
 		panel[2].setLocation(400, 110);
 		panel[3].setLocation(450, 140);
 		panel[4].setLocation(500, 170);
 		setLayout(null);
-
+		
 		for (int i = 0; i < list1.length; ++i) {
 			button.add(new JButton(list1[i]));
 			// button.get(i).addActionListener(this);
 			button.get(i).setPreferredSize(new Dimension(300, 30));
 			button.get(i).setFocusable(false);
-			//System.out.println(button.get(i));
+			// System.out.println(button.get(i));
 			MyButtonListener play = new MyButtonListener();
 			button.get(i).addActionListener(play);
 			button.get(i).setActionCommand("play");
-			
+
 		}
 
 		m = list1.length / 2;
@@ -94,7 +96,7 @@ public class Selection extends JFrame implements KeyListener {
 		mp3 = AudioPlayer.createPlayer(songFile);
 		mp3.play();
 
-		//System.out.println(m);
+		// System.out.println(m);
 
 		panel[0].add(button.get(m - 2));
 		add(panel[0]);
@@ -108,19 +110,24 @@ public class Selection extends JFrame implements KeyListener {
 		add(panel[4]);
 
 		imagefile = new File("src/4K-beatmaps/" + list1[m] + "/BG.jpg");
-	
+
 		try {
 			image = ImageIO.read(imagefile);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		image = image.getScaledInstance(192*2, 108*2, image.SCALE_DEFAULT);
-		BG = new JLabel(new ImageIcon(image));
+
+		hidlabel.setFont(new java.awt.Font("Dialog",1,20));
+		hidlabel.setForeground(Color.blue);
+		hidlabel.setSize(300,30);
+		hidlabel.setLocation(500,250);
+		add(hidlabel);
 		
+		image = image.getScaledInstance(192 * 2, 108 * 2, image.SCALE_DEFAULT);
+		BG = new JLabel(new ImageIcon(image));
 		BG.setSize(192*2, 108*2);
 		BG.setLocation(0, 100);
-		
 		add(BG);
 
 		addKeyListener(this);
@@ -133,37 +140,52 @@ public class Selection extends JFrame implements KeyListener {
 		int temp = m;
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_DOWN:
-		//	m = (m >= list1.length /*- 3*/) ? list1.length /*- 3*/ : m + 1;
-			m = (m >= list1.length-1 /*- 3*/) ? list1.length-1 /*- 3*/ : m + 1;
+			// m = (m >= list1.length /*- 3*/) ? list1.length /*- 3*/ : m + 1;
+			m = (m >= list1.length - 1 /*- 3*/) ? list1.length - 1 /*- 3*/ : m + 1;
 			System.out.println(m + "D");
-			if(mp3.isPlaying()) {
+			if (mp3.isPlaying()) {
 				mp3.close();
 			}
 			File songFile1;
-			
+
 			songFile1 = new File("src/4K-beatmaps/" + list1[m] + "/audio.wav");
 			mp3 = AudioPlayer.createPlayer(songFile1);
 			mp3.play();
-			
 
 			break;
 		case KeyEvent.VK_UP:
 			m = (m == 0) ? 0 : m - 1;
 			System.out.println(m + "U");
-			if(mp3.isPlaying()) {
+			if (mp3.isPlaying()) {
 				mp3.close();
 			}
 			File songFile2;
-			
+
 			songFile2 = new File("src/4K-beatmaps/" + list1[m] + "/audio.wav");
 			mp3 = AudioPlayer.createPlayer(songFile2);
 			mp3.play();
-			
+
 			break;
-			
+		case KeyEvent.VK_H:
+			if(Remove.hidden==false) {
+				Remove.hidden=true;
+				
+				x="on";
+				hidlabel.setText("Hidden:"+x);
+			}
+			else {
+				Remove.hidden=false;
+
+				x="off";
+				hidlabel.setText("Hidden:"+x);
+			}
+			break;
+
 		case KeyEvent.VK_ENTER:
 			button.get(m).doClick();
+		
 		}
+		
 
 		for (int i = 0; i < 5; ++i) {
 
@@ -180,14 +202,15 @@ public class Selection extends JFrame implements KeyListener {
 			gg.printStackTrace();
 		}
 		
+
 		image = image.getScaledInstance(192*2, 108*2, image.SCALE_DEFAULT);
 		
+
 		BG.setIcon(new ImageIcon(image));
-		
-		BG.setSize(192*2,108*2);
-		BG.setLocation(0,100);
+		BG.setSize(192 * 2, 108 * 2);
+		BG.setLocation(0, 100);
 		this.repaint();
-		
+
 		if (m == button.size() - 1) {
 			for (int i = 0; i < 3; ++i) {
 				panel[i].add(button.get(m - 2 + i));

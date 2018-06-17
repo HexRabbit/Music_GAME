@@ -53,6 +53,7 @@ public class Main extends JFrame {
 	public JLabel highest = new JLabel();
 	public static JLabel combo = new JLabel("combo");
 	
+
 	public static JLabel accuracy = new JLabel("0.00%");
 	public static double aa;
 	public static double ab;
@@ -117,6 +118,19 @@ public class Main extends JFrame {
 
 		};
 		
+		
+		/*
+		 * combo
+		 * 
+		 */
+		
+		combo.setOpaque(true);
+		combo.setForeground(Color.white);
+		combo.setBackground(Color.black);
+		combo.setLocation(300,200);
+		combo.setSize(200, 40);
+		combo.setFont(new Font("New Romance", Font.BOLD, 32));
+
 		
 		/*
 		 * combo
@@ -251,28 +265,16 @@ public class Main extends JFrame {
 		}
 		if(Remove.hidden == true) {
 			high *= 1.5;
+			JLabel hid_block = new JLabel();
+			back.setFocusable(false);
+			back.setLocation(75, 400);
+			back.setBackground(Color.black);
+			back.setSize(600, 200);
+			add(back);
 		}
 		highest.setText(Integer.toString(high));
 		
-		this.addKeyListener(new KeyAdapter() {
-			
-			@Override
-			public void keyPressed(KeyEvent e) {
-					
-					
-				/*try {
-					Clip clip = AudioSystem.getClip();
-					AudioInputStream ais = AudioSystem.getAudioInputStream(Main.class.getResourceAsStream("/applaus.wav"));
-					clip.open(ais);
-					
-					
-				} catch (Exception ee) {
-					ee.printStackTrace();
-				}*/
-				 
-		
-			}});
-		
+
 		/*File backFile;
 		backFile = new File("src/4K-beatmaps/" + song + "/BG.jpg");
 		Image backimage = null;

@@ -24,7 +24,7 @@ public class Remove extends TimerTask {
 
 	public void run() {
 		
-		if (hidden == true) {
+		/*if (hidden == true) {
 			score_get = 75;
 			if (!label.hold && label.getY() + label.block_size > 400) {
 				label.setVisible(false);
@@ -32,7 +32,7 @@ public class Remove extends TimerTask {
 			if (!label.hold && label.getY() + label.block_size > 600) {
 				label.setVisible(true);
 			}
-		}
+		}*/
 		if (!label.hold && label.getY() + label.block_size > 700) {
 			Main.assess.setText("Miss");
 			Main.assess.setForeground(Color.pink);

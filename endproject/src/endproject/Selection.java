@@ -116,6 +116,7 @@ public class Selection extends JFrame implements KeyListener {
 			e.printStackTrace();
 		}
 		
+
 		hidlabel.setFont(new java.awt.Font("Dialog",1,20));
 		hidlabel.setForeground(Color.blue);
 		hidlabel.setSize(300,30);
@@ -127,7 +128,6 @@ public class Selection extends JFrame implements KeyListener {
 		// BG.setSize(192,108);
 		BG.setSize(192 * 2, 108 * 2);
 		BG.setLocation(0, 100);
-
 		add(BG);
 
 		addKeyListener(this);

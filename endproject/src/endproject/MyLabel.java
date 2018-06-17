@@ -56,14 +56,14 @@ public class MyLabel extends JLabel implements KeyListener {
 		remove = new Remove(this, c);
 
 		begin = begin - time_elapsed;
-		if (begin < 1000) { // 1000ms�block 敺�������������
+		if (begin < 1000) { // 1000ms嚙踐冪block �豯�嚙踝��蕭嚙踝嚙踝�蕭��蕭嚙踝蕭嚙踝蕭��蕭蹇蕭嚙�
 			begin = 1000;
 		}
 
 		// System.out.println(time_elapsed);
 		show_timer.schedule(show, begin - 1000); // show the label when (begin-1000)
-		move_timer.scheduleAtFixedRate(move, begin - 1000, 2); // (575-75)*2 = (摨�-����蔭) / (瘥�2ms敺�銝�1)
-		remove_timer.scheduleAtFixedRate(remove, begin - 1000, 2); // 瘥�2ms��銝�甈⊥�閬��abel
+		move_timer.scheduleAtFixedRate(move, begin - 1000, 2); // (575-75)*2 = (�嚙�-嚙踝蕭豲蕭��蕭��) / (�嚙�2ms�嚙賡�蕭1)
+		remove_timer.scheduleAtFixedRate(remove, begin - 1000, 2); // �嚙�2ms嚙踝�蕭謘�蕭��謢�嚙踐�蹓鳴�蕭嚙踝�bel
 
 		c.addKeyListener(this); // add KeyListener to JFrame
 		c.setFocusable(true);
@@ -113,6 +113,7 @@ public class MyLabel extends JLabel implements KeyListener {
 		} else if (e == 0 && getY() > 545 && getY() < 635) { // is single press
 			// e == 0 will help avoid long press step into this if-condition
 			char key = arg0.getKeyChar();
+
 			if ((column == 0 && key == 'd') || (column == 1 && key == 'f') || (column == 2 && key == 'j')
 					|| (column == 3 && key == 'k')) {
 				if (getY() < 555 || getY() >= 615) { // bad

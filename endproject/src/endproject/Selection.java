@@ -180,7 +180,7 @@ public class Selection extends JFrame implements KeyListener {
 			gg.printStackTrace();
 		}
 		
-		
+		image = image.getScaledInstance(192*2, 108*2, image.SCALE_DEFAULT);
 		
 		BG.setIcon(new ImageIcon(image));
 		

@@ -3,6 +3,7 @@ package endproject;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Timer;
 
 import javax.swing.JButton;
 
@@ -68,6 +69,16 @@ public class MyButtonListener implements ActionListener{
 			
 			Selection.frame1.l.clear();
 			System.out.println("size: "+ Selection.frame1.l.size());
+			Selection.frame1.start_timer.cancel();
+			Selection.frame1.start_timer.purge();
+			Selection.frame1.start_timer = null;
+			Selection.frame1.score_timer.cancel();
+			Selection.frame1.score_timer.purge();
+			Selection.frame1.score_timer = null;
+			Selection.frame1.end_timer.cancel();
+			Selection.frame1.end_timer.purge();
+			Selection.frame1.end_timer = null;
+			
 			Selection.frame1.dispose();
 			Selection.frame1.removeNotify();
 			//Selection.frame1.setVisible(false);

@@ -73,7 +73,9 @@ public class Main extends JFrame {
 	public LinkedList<MyLabel> l;// = new LinkedList<MyLabel>();
 	
 	//public JLabel background;// = new JLabel();
-	
+	public Timer score_timer;
+	public Timer start_timer;
+	public Timer end_timer;
 	public Main(String song) {
 		now_play = song;
 		setSize(900, 700);
@@ -116,7 +118,7 @@ public class Main extends JFrame {
 		score.setFont(new Font("New Romance", Font.BOLD, 32));
 		
 		add(score);
-		Timer score_timer = new Timer();
+		score_timer = new Timer();
 		TimerTask check_score = new TimerTask() {
 
 			@Override
@@ -262,14 +264,14 @@ public class Main extends JFrame {
 		mp3 = AudioPlayer.createPlayer(songFile);
 		
 		/* Add start & end timer to decrease latency */
-		Timer start_timer = new Timer();
+		start_timer = new Timer();
 		TimerTask playStart = new TimerTask() {
 			public void run() {
 				// TODO Auto-generated method stub
 				mp3.play();
 			}
 		};
-		Timer end_timer = new Timer();
+		end_timer = new Timer();
 		TimerTask result = new TimerTask() {
 			public void run() {
 				// TODO Auto-generated method stub
@@ -278,6 +280,7 @@ public class Main extends JFrame {
 		};
 		
 		start_timer.schedule(playStart, playwait);
+		
 		end_timer.schedule(result,mp3.getAudioLength()/1000 + 1500 + playwait);
 		
 		

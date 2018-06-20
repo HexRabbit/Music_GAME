@@ -319,11 +319,12 @@ public class Main extends JFrame {
 		if(Remove.hidden == true) {
 			high *= 1.5;
 			JLabel hid_block = new JLabel();
-			back.setFocusable(false);
-			back.setLocation(75, 400);
-			back.setBackground(Color.black);
-			back.setSize(600, 200);
-			add(back);
+			hid_block.setFocusable(false);
+			hid_block.setLocation(75, 400);
+			hid_block.setOpaque(true);
+			hid_block.setBackground(Color.black);
+			hid_block.setSize(600, 180);
+			add(hid_block);
 		}
 		highest.setText(Integer.toString(high));
 		

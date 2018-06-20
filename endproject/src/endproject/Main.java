@@ -319,59 +319,17 @@ public class Main extends JFrame {
 		if(Remove.hidden == true) {
 			high *= 1.5;
 			JLabel hid_block = new JLabel();
-			back.setFocusable(false);
-			back.setLocation(75, 400);
-			back.setBackground(Color.black);
-			back.setSize(600, 200);
-			add(back);
+			hid_block.setFocusable(false);
+			hid_block.setLocation(75, 400);
+			hid_block.setOpaque(true);
+			hid_block.setBackground(Color.black);
+			hid_block.setSize(600, 180);
+			add(hid_block);
 		}
 		highest.setText(Integer.toString(high));
 		
 		/* Add key click sound */
-		this.addKeyListener(new KeyAdapter() {
-			boolean pressed = false;
-			File clickSoundFile = new File("src/res/clicksound.wav");
-			AudioPlayer clickSound = AudioPlayer.createPlayer(clickSoundFile);
-			
-			@Override
-			public void keyPressed(KeyEvent e) {
-				char key = e.getKeyChar();
-				switch(key) {
-				case 'd':feedback[0].setVisible(true);
-					break;
-				case 'f':feedback[1].setVisible(true);
-					break;
-				case 'j':feedback[2].setVisible(true);
-					break;
-				case 'k':feedback[3].setVisible(true);
-					break;
-				}
-				if((pressed == false) && (key == 'd' || key == 'f' || key == 'j' || key == 'k')) {
-					clickSound.setVolume(20);
-					clickSound.play();	
-					pressed = true;
-					
-				}
-			}
-			@Override
-			public void keyReleased(KeyEvent e) {
-				char key = e.getKeyChar();
-				switch(key) {
-				case 'd':feedback[0].setVisible(false);
-					break;
-				case 'f':feedback[1].setVisible(false);
-					break;
-				case 'j':feedback[2].setVisible(false);
-					break;
-				case 'k':feedback[3].setVisible(false);
-					break;
-				}
-				if(pressed == true && (key == 'd' || key == 'f' || key == 'j'|| key == 'k')) {
-					pressed = false;
-					
-				}
-			}
-		});
+		this.addKeyListener(new MyKeyListener(feedback));
 	}
 
 }

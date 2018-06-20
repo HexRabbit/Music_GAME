@@ -133,8 +133,7 @@ public class Result extends JFrame{
 		back.addActionListener(buttonListener);
 		back.setFocusable(false);
 		back.setLocation(500, 80);
-		back.setOpaque(true);
-		back.setBackground(Color.black);
+		back.setBackground(Color.gray);
 		back.setSize(100, 30);
 		add(back);
 		

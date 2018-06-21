@@ -136,7 +136,7 @@ public class Main extends JFrame {
 		 * combo
 		 * 
 		 */
-		combo = new JLabel("combo 0");
+		combo = new JLabel("combo 0", JLabel.CENTER);
 		combo.setForeground(Color.white);
 		combo.setLocation(300,200);
 		combo.setSize(200, 40);
@@ -168,12 +168,10 @@ public class Main extends JFrame {
 		/*
 		 * to print out how performance you get
 		 */
-		assess = new JLabel(); 
+		assess = new JLabel(" ", JLabel.CENTER); 
 		assess.setLocation(330, 330);
 		assess.setSize(120, 40);
 		assess.setFont(new Font("New Romance", Font.BOLD, 32));
-		assess.setAlignmentX(CENTER_ALIGNMENT);
-		assess.setAlignmentY(CENTER_ALIGNMENT);
 		add(assess);
 
 		/*

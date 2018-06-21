@@ -52,7 +52,7 @@ public class Main extends JFrame {
 	
 	public JLabel highest;// = new JLabel();
 	public JLabel combo;// = new JLabel("combo");
-	
+	public JLabel maxText;
 
 	public JLabel accuracy;// = new JLabel("0.00%");
 	public double aa;
@@ -92,9 +92,9 @@ public class Main extends JFrame {
 		
 		
 		pause.setFocusable(false);
-		pause.setLocation(800, 50);
+		pause.setLocation(740, 580);
 		pause.setOpaque(true);
-		pause.setBackground(Color.black);
+		pause.setBackground(Color.gray);
 		pause.setSize(100, 30);
 		add(pause);
 
@@ -103,9 +103,9 @@ public class Main extends JFrame {
 		MyButtonListener buttonListener = new MyButtonListener();
 		back.addActionListener(buttonListener);
 		back.setFocusable(false);
-		back.setLocation(800, 80);
+		back.setLocation(740, 550);
 		back.setOpaque(true);
-		back.setBackground(Color.black);
+		back.setBackground(Color.gray);
 		back.setSize(100, 30);
 		add(back);
 		
@@ -113,38 +113,38 @@ public class Main extends JFrame {
 		score.setOpaque(true);
 		score.setForeground(Color.white);
 		score.setBackground(Color.black);
-		score.setLocation(750, 20);
+		score.setLocation(700, 70);
 		score.setSize(150, 30);
 		score.setFont(new Font("New Romance", Font.BOLD, 32));
-		
 		add(score);
+		
+		/* update score */
 		score_timer = new Timer();
 		TimerTask check_score = new TimerTask() {
 
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				score.setText(Integer.toString(grade));
+				score.setText(String.format("%08d", grade));
 			}
 
 		};
+		score_timer.schedule(check_score, 0, 50);
 		
 		
 		/*
 		 * combo
 		 * 
 		 */
-		combo = new JLabel("combo");
-		combo.setOpaque(true);
+		combo = new JLabel("combo 0");
 		combo.setForeground(Color.white);
-		combo.setBackground(Color.black);
 		combo.setLocation(300,200);
 		combo.setSize(200, 40);
 		combo.setFont(new Font("New Romance", Font.BOLD, 32));
 
 		add(combo);
 		
-		score_timer.schedule(check_score, 0, 50);
+		
 		
 		accuracy_word = new JLabel("Accuracy:");
 		accuracy_word.setOpaque(true);
@@ -159,7 +159,7 @@ public class Main extends JFrame {
 		accuracy.setOpaque(true);
 		accuracy.setForeground(Color.white);
 		accuracy.setBackground(Color.black);
-		accuracy.setLocation(725, 250);
+		accuracy.setLocation(750, 260);
 		accuracy.setSize(150, 30);
 		accuracy.setFont(new Font("New Romance", Font.BOLD, 32));
 		add(accuracy);
@@ -172,9 +172,6 @@ public class Main extends JFrame {
 		assess.setLocation(330, 330);
 		assess.setSize(120, 40);
 		assess.setFont(new Font("New Romance", Font.BOLD, 32));
-		assess.setOpaque(true);
-		assess.setBackground(Color.black);
-		assess.setForeground(Color.GREEN);
 		assess.setAlignmentX(CENTER_ALIGNMENT);
 		assess.setAlignmentY(CENTER_ALIGNMENT);
 		add(assess);
@@ -201,7 +198,7 @@ public class Main extends JFrame {
 		 */
 		JLabel wall = new JLabel();
 		wall.setLocation(0, 0);
-		wall.setSize(800, 120);
+		wall.setSize(700, 120);
 		wall.setOpaque(true);
 		wall.setBackground(Color.BLACK);
 		add(wall);
@@ -211,14 +208,20 @@ public class Main extends JFrame {
 		 * (should hide)
 		 */
 		highest = new JLabel();
-		highest.setLocation(750, 150);
+		highest.setLocation(750, 460);
 		highest.setSize(150, 30);
-		highest.setOpaque(true);
-		highest.setBackground(Color.BLACK);
 		highest.setForeground(Color.WHITE);
 		highest.setFont(new Font("New Romance", Font.BOLD, 32));
 		add(highest);
-
+		
+		maxText = new JLabel("Max:");
+		maxText.setForeground(Color.white);
+		maxText.setLocation(700, 420);
+		maxText.setSize(200, 30);
+		maxText.setFont(new Font("New Romance", Font.BOLD, 32));
+		add(maxText);
+		
+		
 		/*
 		 * feed back
 		 * 
@@ -245,13 +248,13 @@ public class Main extends JFrame {
 		int high = 0;
 		
 		/* for testing purpose */
-		JButton re = new JButton();
+		JButton re = new JButton("Result");
 		re.setActionCommand("Result");
 		re.addActionListener(buttonListener);
 		re.setFocusable(false);
-		re.setLocation(800, 100);
+		re.setLocation(740, 610);
 		re.setOpaque(true);
-		re.setBackground(Color.black);
+		re.setBackground(Color.gray);
 		re.setSize(100, 30);
 		add(re);
 		

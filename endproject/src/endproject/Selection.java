@@ -18,6 +18,7 @@ import org.magiclen.magicaudioplayer.AudioPlayer;
 import javax.swing.*;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -72,11 +73,11 @@ public class Selection extends JFrame implements KeyListener {
 
 		}
 		
-		panel[0].setLocation(500, 50);
-		panel[1].setLocation(450, 80);
-		panel[2].setLocation(400, 110);
-		panel[3].setLocation(450, 140);
-		panel[4].setLocation(500, 170);
+		panel[0].setLocation(500, 200);
+		panel[1].setLocation(450, 230);
+		panel[2].setLocation(400, 260);
+		panel[3].setLocation(450, 290);
+		panel[4].setLocation(500, 320);
 		setLayout(null);
 		
 		for (int i = 0; i < list1.length; ++i) {
@@ -121,13 +122,13 @@ public class Selection extends JFrame implements KeyListener {
 		hidlabel.setFont(new java.awt.Font("Dialog",1,20));
 		hidlabel.setForeground(Color.blue);
 		hidlabel.setSize(300,30);
-		hidlabel.setLocation(500,250);
+		hidlabel.setLocation(680,360);
 		add(hidlabel);
 		
 		image = image.getScaledInstance(192 * 2, 108 * 2, image.SCALE_DEFAULT);
 		BG = new JLabel(new ImageIcon(image));
 		BG.setSize(192*2, 108*2);
-		BG.setLocation(0, 100);
+		BG.setLocation(0, 180);
 		add(BG);
 
 		addKeyListener(this);
@@ -137,7 +138,6 @@ public class Selection extends JFrame implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		int temp = m;
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_DOWN:
 			// m = (m >= list1.length /*- 3*/) ? list1.length /*- 3*/ : m + 1;
@@ -203,12 +203,12 @@ public class Selection extends JFrame implements KeyListener {
 		}
 		
 
-		image = image.getScaledInstance(192*2, 108*2, image.SCALE_DEFAULT);
+		image = image.getScaledInstance(192*2, 108*2, Image.SCALE_DEFAULT);
 		
 
 		BG.setIcon(new ImageIcon(image));
 		BG.setSize(192 * 2, 108 * 2);
-		BG.setLocation(0, 100);
+		BG.setLocation(0, 180);
 		this.repaint();
 
 		if (m == button.size() - 1) {
@@ -262,7 +262,13 @@ public class Selection extends JFrame implements KeyListener {
 		}
 
 	}
-
+	
+	public void paint(Graphics g) {
+		super.paint(g);
+		g.setColor(Color.red);
+		g.drawRect(400, 293, 450, 30);
+	}
+	
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
